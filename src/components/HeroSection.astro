@@ -1,0 +1,80 @@
+---
+import Header from "../components/Header.astro";
+import SocialIcons from "../components/SocialIcons.astro";
+---
+
+<section id="hero">
+  <Header />
+  <div id="hero-content">
+    <div id="hero-photo">
+      <span></span>
+    </div>
+    <h1>Hello World! <br /> I'm Mohsen.</h1>
+    <div id="hero-details">
+      <p>
+        Hi, I’m Mohsen Elsisi. I’m a self-taught web and flutter developer
+        turned data science and AI college student at Zewail city.
+      </p>
+      <a href="/about">more about me</a>
+      <SocialIcons />
+    </div>
+  </div>
+</section>
+
+<style>
+  #hero {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #hero-content {
+    flex: 1;
+
+    display: grid;
+    grid-template-areas:
+      "title"
+      "photo"
+      "details";
+    padding: 0 3.5rem;
+    padding-bottom: 1rem;
+  }
+
+  #hero-photo {
+    width: 100%;
+    height: 100%;
+
+    grid-area: photo;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #hero-photo span {
+    width: 100%;
+    height: 100%;
+    background-color: red;
+  }
+
+  #hero-details {
+    grid-area: details;
+
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: 1rem;
+
+    font-size: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    #hero-content {
+      grid-template-areas:
+        "photo title"
+        "photo details";
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: min-content 1fr;
+      align-items: top;
+      column-gap: 3.5rem;
+    }
+  }
+</style>

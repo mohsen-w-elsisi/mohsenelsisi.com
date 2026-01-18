@@ -1,11 +1,11 @@
 ---
 import { Image } from "astro:assets";
-import myAvater from "../assets/me.jpg";
+import myAvatar from "../assets/me.jpg";
 ---
 
 <header>
   <a href="/" id="avatar">
-    <Image src={myAvater} alt="Mohsen's Avatar" />
+    <Image src={myAvatar} alt="Mohsen's Avatar" />
   </a>
   <nav>
     <a href="/">Home</a>
@@ -33,12 +33,12 @@ import myAvater from "../assets/me.jpg";
     gap: 1rem;
     align-items: center;
     
-    font-family: "Roboto", sans-serif;
     font-size: 25px;
-
+    
     a {
+      font-family: var(--font-sans);
       text-decoration: none;
-      color: black;
+      color: var(--dark-color);
     }
   }
 
