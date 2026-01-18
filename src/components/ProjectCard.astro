@@ -1,0 +1,49 @@
+---
+
+---
+
+<article class="project-card">
+  <h3>Project Title</h3>
+  <img src="/project-preview/procedural-terrain-gen.png" alt="Project Image" />
+  <p>This is a brief description of the project.</p>
+  <div class="project-tool-icons">
+    <img src="/project-tool-icon/firebase.png" alt="Icon 1" />
+    <img src="/project-tool-icon/flutter.svg" alt="Icon 2" />
+  </div>
+</article>
+
+<style>
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .project-card > img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  h3 {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    text-align: center;
+    margin: 0;
+  }
+
+  .project-tool-icons {
+    width: 100%;
+    margin-top: auto;
+    
+    display: flex;
+    gap: 0.5rem;
+    justify-content: end;
+    
+    img {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+</style>

@@ -1,0 +1,75 @@
+---
+import ProjectCard from "../ProjectCard.astro";
+---
+
+<section id="projects">
+  <h2>Projects</h2>
+  <div id="projects-row">
+    <ProjectCard />
+    <ProjectCard />
+    <ProjectCard />
+  </div>
+  <a href="/projects">see more</a>
+</section>
+
+<style>
+  #projects {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  h2 {
+    padding: 0 var(--landing-page-section-x-pad);
+  }
+
+  #projects-row {
+    flex: 1;
+    max-height: var(--project-row-height);
+    margin-bottom: 2rem;
+
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: var(--project-card-spacing);
+    padding: 0 var(--landing-page-section-x-pad);
+
+    scroll-snap-type: x mandatory;
+  }
+
+  #projects-row > :global(*) {
+    flex: 1;
+    max-width: var(--project-card-width);
+
+    scroll-snap-align: start;
+  }
+
+  @media (max-width: 768px) {
+    #projects-row {
+      justify-content: flex-start;
+      padding: 0;
+    }
+
+    #projects-row > :global(*) {
+      flex: 0 0 auto;
+      scroll-snap-align: center;
+    }
+
+    #projects-row > :global(:first-child) {
+      margin-left: var(--project-card-spacing);
+    }
+
+    #projects-row > :global(:last-child) {
+      margin-right: var(--project-card-spacing);
+    }
+  }
+
+  #projects > a {
+    margin-bottom: 2rem;
+    margin-right: auto;
+    margin-left: auto;
+
+    font-size: var(--display-body-font-size);
+  }
+</style>

@@ -1,0 +1,12 @@
+:root {
+  /* Projects Section */
+  --project-card-spacing: min(2vw, 2rem);
+  --project-row-height: 60vh;
+  --project-card-width: 18rem;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --project-card-width: 80%;
+  }
+}

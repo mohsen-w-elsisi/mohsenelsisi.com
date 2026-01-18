@@ -32,9 +32,9 @@ import myAvatar from "../assets/me.jpg";
     display: flex;
     gap: 1rem;
     align-items: center;
-    
+
     font-size: 25px;
-    
+
     a {
       font-family: var(--font-sans);
       text-decoration: none;
@@ -50,6 +50,12 @@ import myAvatar from "../assets/me.jpg";
       height: 100%;
       width: 100%;
       border-radius: 100%;
+    }
+  }
+
+  @media (max-width: 720px) {
+    nav {
+      display: none;
     }
   }
 </style>
