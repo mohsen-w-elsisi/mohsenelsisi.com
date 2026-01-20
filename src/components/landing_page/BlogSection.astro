@@ -1,0 +1,38 @@
+---
+import BlogPostCard from "../BlogPostCard.astro";
+---
+<section id="blog">
+  <h2>Blog</h2>
+  <div class="blog-posts">
+    <BlogPostCard />
+    <BlogPostCard />
+    <BlogPostCard />
+    <BlogPostCard />
+  </div>
+  <a href="/blog" class="see-more">see more</a>
+</section>
+
+<style>
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0 var(--landing-page-section-x-pad);
+  }
+
+  .blog-posts {
+    width: 100%;
+    max-width: var(--card-grid-max-width);
+    align-self: center;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .blog-posts {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

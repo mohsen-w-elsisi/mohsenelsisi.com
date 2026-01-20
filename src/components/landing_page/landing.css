@@ -1,4 +1,12 @@
 :root {
+  --landing-page-section-x-pad: 3.5rem;
+  
+  /* Cards */
+  --card-grid-max-width: 1200px;
+  --card-content-gap: 0.9rem;
+  --card-title-font: 1.5rem var(--font-serif);
+  --card-body-font: 1rem var(--font-sans);
+
   /* Projects Section */
   --project-card-spacing: min(2vw, 2rem);
   --project-row-height: 60vh;
@@ -7,6 +15,18 @@
 
 @media (max-width: 768px) {
   :root {
+    --landing-page-section-x-pad: 1rem;
+    
+    /* project section */
     --project-card-width: 80%;
   }
+}
+
+.see-more {
+  /* margin-top: auto; */
+  margin-bottom: 2rem;
+  margin-right: auto;
+  margin-left: auto;
+
+  font-size: var(--display-body-font-size);
 }
