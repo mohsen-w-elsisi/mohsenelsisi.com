@@ -43,17 +43,25 @@ const recentPostData = await Promise.all(
 
   .blog-posts {
     width: 100%;
-    max-width: var(--card-grid-max-width);
+    margin: auto;
     align-self: center;
 
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    place-items: center;
     gap: 1rem;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1060px) {
     .blog-posts {
       grid-template-columns: 1fr;
+      max-width: var(--blog-card-single-col-grid-max-width);
+    }
+  }
+
+  @media (min-width: 1061px) {
+    .blog-posts {
+      grid-template-columns: 1fr 1fr;
+      max-width: var(--card-grid-max-width);
     }
   }
 </style>
