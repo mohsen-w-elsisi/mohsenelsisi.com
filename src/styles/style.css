@@ -9,6 +9,8 @@
   --display-body-font-size: 2rem;
 
   --rounded-corner-radius: 20px;
+
+  --shadow: 0px 10px 19px 21px rgba(0,0,0,0.1);
 }
 
 html,

@@ -1,19 +1,23 @@
 ---
 import "../styles/blog-typography.css";
+import type { MarkdownHeading } from "astro";
 import Layout from "./Layout.astro";
 import Header from "../components/Header.astro";
-import { readableDate } from "../components/readableDate";
+import readableDate from "../components/readableDate";
+import TocButton from "../components/TocButton.svelte";
 
 interface Props {
   title: string;
   date: Date;
+  headings: MarkdownHeading[];
 }
 
-const { title, date } = Astro.props;
+const { title, date, headings } = Astro.props;
 ---
 
 <Layout>
   <Header />
+  <TocButton headings={headings} client:load />
   <main class="blog-content">
     <h1>{title}</h1>
     <span id="byline">
