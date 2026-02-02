@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "astro": "^5.16.11",
+    "date-fns": "^4.1.0",
     "remark-preview-to-frontmatter": "file:../astro-preview"
   }
 }

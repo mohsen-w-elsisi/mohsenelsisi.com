@@ -1,29 +1,40 @@
 ---
+import { format as formatDate } from "date-fns";
+
 interface Props {
+  id: string;
   title: string;
-  text: string;
+  date: Date;
+  preview: string;
 }
 
-const { title, text } = Astro.props;
+const { id, title, date, preview } = Astro.props;
 ---
 
-<article>
+<a href={`/blog/${id}`} class="card">
   <h3>{title}</h3>
-  <p>{text}</p>
-</article>
+  <p class="date">{formatDate(date, "MMMM d, yyyy")}</p>
+  <p>{preview}</p>
+</a>
 
 <style>
-  article {
+  a {
     height: min(fit-content, 10rem);
 
     display: flex;
     flex-direction: column;
-    gap: var(--card-content-gap);
+    gap: var(--blog-card-content-gap);
   }
 
   h3 {
     font: var(--card-title-font);
     margin: 0;
+  }
+
+  .date {
+    font: var(--card-body-font);
+    font-weight: 600;
+    margin-bottom: 0.2rem;
   }
 
   p {

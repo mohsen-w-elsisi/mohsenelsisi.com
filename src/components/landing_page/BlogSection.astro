@@ -7,9 +7,16 @@ const posts = await getCollection("posts");
 posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 const recentPosts = posts.slice(0, 4);
 
-const postPreviews = await Promise.all(
+const recentPostData = await Promise.all(
   recentPosts.map(async (post) => {
-    return (await render(post)).remarkPluginFrontmatter.preview as string;
+    const preview = (await render(post)).remarkPluginFrontmatter
+      .preview as string;
+    return {
+      id: post.id,
+      title: post.data.title,
+      date: post.data.date,
+      preview,
+    };
   }),
 );
 ---
@@ -18,8 +25,8 @@ const postPreviews = await Promise.all(
   <h2>Blog</h2>
   <div class="blog-posts">
     {
-      recentPosts.map((post, i) => (
-        <BlogPostCard title={post.data.title} text={postPreviews[i]} />
+      recentPostData.map(({ id, title, date, preview }) => (
+        <BlogPostCard id={id} title={title} date={date} preview={preview} />
       ))
     }
   </div>

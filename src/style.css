@@ -1,11 +1,11 @@
 :root {
   --primary-color: #5505c6;
-  --surface-color: #D6D9F8;
+  --surface-color: #d6d9f8;
   --dark-color: #000;
 
   --font-serif: "Bree Serif", serif;
   --font-sans: "Roboto", sans-serif;
-  
+
   --display-body-font-size: 2rem;
 
   --rounded-corner-radius: 20px;
@@ -21,7 +21,7 @@ section {
   min-height: 100vh;
 }
 
-article {
+.card {
   background-color: var(--surface-color);
   border-radius: var(--rounded-corner-radius);
   padding: 1rem;
@@ -38,12 +38,19 @@ h2 {
 }
 
 a {
-  font-family: var(--font-serif);
-  font-style: normal;
-  font-weight: 400;
-  text-decoration-line: underline;
+  &.card {
+    text-decoration: none;
+    color: inherit;
+  }
 
-  color: var(--primary-color);
+  &:not(.card) {
+    font-family: var(--font-serif);
+    font-style: normal;
+    font-weight: 400;
+    text-decoration-line: underline;
+
+    color: var(--primary-color);
+  }
 }
 
 p {
