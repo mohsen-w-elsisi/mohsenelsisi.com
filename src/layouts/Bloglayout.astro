@@ -1,0 +1,33 @@
+---
+import "../styles/blog-typography.css";
+import Layout from "./Layout.astro";
+import Header from "../components/Header.astro";
+import { readableDate } from "../components/readableDate";
+
+interface Props {
+  title: string;
+  date: Date;
+}
+
+const { title, date } = Astro.props;
+---
+
+<Layout>
+  <Header />
+  <main class="blog-content">
+    <h1>{title}</h1>
+    <span id="byline">
+        Written by Mohsen Elsisi, {readableDate(date)}
+    </span>
+    <slot />
+  </main>
+</Layout>
+
+<style>
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+  }
+</style>

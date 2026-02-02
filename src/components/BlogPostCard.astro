@@ -1,5 +1,5 @@
 ---
-import { format as formatDate } from "date-fns";
+import { readableDate } from "./readableDate";
 
 interface Props {
   id: string;
@@ -13,7 +13,7 @@ const { id, title, date, preview } = Astro.props;
 
 <a href={`/blog/${id}`} class="card">
   <h3>{title}</h3>
-  <p class="date">{formatDate(date, "MMMM d, yyyy")}</p>
+  <p class="date">{readableDate(date)}</p>
   <p>{preview}</p>
 </a>
 
