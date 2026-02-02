@@ -1,13 +1,27 @@
 ---
+import { getCollection } from "astro:content";
 import BlogPostCard from "../BlogPostCard.astro";
+import { render } from "astro:content";
+
+const posts = await getCollection("posts");
+posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const recentPosts = posts.slice(0, 4);
+
+const postPreviews = await Promise.all(
+  recentPosts.map(async (post) => {
+    return (await render(post)).remarkPluginFrontmatter.preview as string;
+  }),
+);
 ---
+
 <section id="blog">
   <h2>Blog</h2>
   <div class="blog-posts">
-    <BlogPostCard />
-    <BlogPostCard />
-    <BlogPostCard />
-    <BlogPostCard />
+    {
+      recentPosts.map((post, i) => (
+        <BlogPostCard title={post.data.title} text={postPreviews[i]} />
+      ))
+    }
   </div>
   <a href="/blog" class="see-more">see more</a>
 </section>

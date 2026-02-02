@@ -1,9 +1,15 @@
+---
+interface Props {
+  title: string;
+  text: string;
+}
+
+const { title, text } = Astro.props;
+---
+
 <article>
-  <h3>blog title!!!</h3>
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua.
-  </p>
+  <h3>{title}</h3>
+  <p>{text}</p>
 </article>
 
 <style>
