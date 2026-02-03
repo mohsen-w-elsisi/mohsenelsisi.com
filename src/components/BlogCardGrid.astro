@@ -1,0 +1,44 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BlogPostCard from "./BlogPostCard.astro";
+
+interface Props {
+  posts: CollectionEntry<"posts">[];
+  class?: string;
+}
+
+const { posts, class: className, ...props } = Astro.props;
+---
+
+<ol class:list={["card-grid", className]} {...props}>
+  {posts.map((post) => <BlogPostCard post={post} />)}
+</ol>
+
+<style>
+  .card-grid {
+    width: 100%;
+    margin: auto;
+    align-self: center;
+
+    display: grid;
+    place-items: center;
+    gap: 1rem;
+
+    list-style: none;
+    padding: 0;
+  }
+
+  @media (max-width: 1060px) {
+    .card-grid {
+      grid-template-columns: 1fr;
+      max-width: 45rem;
+    }
+  }
+
+  @media (min-width: 1061px) {
+    .card-grid {
+      grid-template-columns: 1fr 1fr;
+      max-width: 75rem;
+    }
+  }
+</style>

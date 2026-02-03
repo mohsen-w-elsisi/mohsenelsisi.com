@@ -10,7 +10,7 @@
 
   --rounded-corner-radius: 20px;
 
-  --shadow: 0px 10px 19px 21px rgba(0,0,0,0.1);
+  --shadow: 0px 10px 19px 21px rgba(0, 0, 0, 0.1);
 }
 
 html,
@@ -27,6 +27,12 @@ section {
   background-color: var(--surface-color);
   border-radius: var(--rounded-corner-radius);
   padding: 1rem;
+
+  --card-title-font: 1.5rem var(--font-serif);
+  --card-body-font: 1rem var(--font-sans);
+
+  --project-card-content-gap: 0.9rem;
+  --blog-card-content-gap: 0.5rem;
 }
 
 h1,
@@ -39,6 +45,7 @@ h6 {
   font-style: normal;
   font-weight: 400;
   font-size: 4rem;
+  text-transform: capitalize;
   margin: 0;
   margin-bottom: 1rem;
 }

@@ -1,20 +1,27 @@
 ---
+import Header from "../../components/Header.astro";
 import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
+import BlogCardGrid from "../../components/BlogCardGrid.astro";
 
 const posts = await getCollection("posts");
+posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 <Layout>
-  <h1>blog posts!</h1>
-
-  <ul>
-    {
-      posts.map((post) => (
-        <li>
-          <a href={`/blog/${post.id}`}>{post.data.title}</a>
-        </li>
-      ))
-    }
-  </ul>
+  <Header />
+  <main>
+    <h1>Blog</h1>
+    <BlogCardGrid posts={posts} class="blog-grid" />
+  </main>
 </Layout>
+
+<style>
+  main {
+    padding: 0 2rem;
+  }
+
+  main :global(.blog-grid) {
+    padding: 2rem 0;
+  }
+</style>

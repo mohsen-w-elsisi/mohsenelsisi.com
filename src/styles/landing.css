@@ -3,12 +3,6 @@
   
   /* Cards */
   --card-grid-max-width: 1200px;
-  --card-title-font: 1.5rem var(--font-serif);
-  --card-body-font: 1rem var(--font-sans);
-  
-  --project-card-content-gap: 0.9rem;
-  --blog-card-content-gap: 0.5rem;
-
 
   /* Projects Section */
   --project-card-spacing: min(2vw, 2rem);

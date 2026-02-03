@@ -1,19 +1,19 @@
 ---
 import readableDate from "./readableDate";
+import { render, type CollectionEntry } from "astro:content";
 
 interface Props {
-  id: string;
-  title: string;
-  date: Date;
-  preview: string;
+  post: CollectionEntry<"posts">;
 }
 
-const { id, title, date, preview } = Astro.props;
+const { post } = Astro.props;
+const { remarkPluginFrontmatter } = await render(post);
+const preview = remarkPluginFrontmatter.preview as string;
 ---
 
-<a href={`/blog/${id}`} class="card">
-  <h3>{title}</h3>
-  <p class="date">{readableDate(date)}</p>
+<a href={`/blog/${post.id}`} class="card">
+  <h3>{post.data.title}</h3>
+  <p class="date">{readableDate(post.data.date)}</p>
   <p>{preview}</p>
 </a>
 
