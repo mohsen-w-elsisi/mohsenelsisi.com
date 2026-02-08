@@ -1,13 +1,15 @@
 ---
+import { getCollection } from "astro:content";
 import ProjectCard from "../ProjectCard.astro";
+
+const projects = await getCollection("projects");
+const previewProjects = projects.slice(0, 3);
 ---
 
 <section id="projects">
   <h2>Projects</h2>
   <div id="projects-row">
-    <ProjectCard />
-    <ProjectCard />
-    <ProjectCard />
+    {previewProjects.map((project) => <ProjectCard project={project} />)}
   </div>
   <a href="/projects" class="see-more">see more</a>
 </section>

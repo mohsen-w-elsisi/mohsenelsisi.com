@@ -1,12 +1,30 @@
-<article class="card project-card">
-  <h3>Project Title</h3>
-  <img src="/project-preview/procedural-terrain-gen.png" alt="Project Image" />
-  <p>This is a brief description of the project.</p>
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import { loadPreviewImage, loadToolIcons } from "./projectAssetLoader";
+
+interface Props {
+  project: CollectionEntry<"projects">;
+}
+
+const { project } = Astro.props;
+
+const previewImage = loadPreviewImage(project.id);
+const toolIcons = loadToolIcons(project.data.tools);
+---
+
+<a href=`project/${project.id}` class="card project-card">
+  <h3>{project.data.title}</h3>
+  <Image src={previewImage} alt={project.data.title} />
+  <p>{project.data.description}</p>
   <div class="project-tool-icons">
-    <img src="/project-tool-icon/firebase.png" alt="Icon 1" />
-    <img src="/project-tool-icon/flutter.svg" alt="Icon 2" />
+    {
+      toolIcons.map((icon, i) => (
+        <Image src={icon} alt={""} title={project.data.tools[i]} />
+      ))
+    }
   </div>
-</article>
+</a>
 
 <style>
   .project-card {
@@ -35,11 +53,11 @@
   .project-tool-icons {
     width: 100%;
     margin-top: auto;
-    
+
     display: flex;
     gap: 0.5rem;
     justify-content: end;
-    
+
     img {
       width: 2rem;
       height: 2rem;
