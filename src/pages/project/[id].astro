@@ -1,0 +1,67 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import { loadShowcaseImages } from "../../components/projects/projectAssetLoader";
+import { Image } from "astro:assets";
+import ProjectPlatformChip from "../../components/projects/ProjectPlatformChip.astro";
+import Header from "../../components/Header.astro";
+
+export const getStaticPaths = (async () => {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { id: project.id },
+    props: { project },
+  }));
+}) satisfies GetStaticPaths;
+
+const { project } = Astro.props;
+
+const images = await loadShowcaseImages(project.id);
+---
+
+<Layout>
+  <Header />
+  <main>
+    <h1>{project.data.title}</h1>
+    <div class="links">
+      {
+        project.data.links.map((link) => (
+          <ProjectPlatformChip platform={link.platform} url={link.url} />
+        ))
+      }
+    </div>
+    <div class="showcase-images">
+      {images.map((image) => <Image src={image} alt="" />)}
+    </div>
+    <p>{project.data.description}</p>
+  </main>
+</Layout>
+
+<style>
+  main {
+    padding: 0 2rem;
+    padding-bottom: 1rem;
+  }
+
+  .links {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .showcase-images {
+    display: flex;
+    height: 20rem;
+    margin: 1rem 0;
+
+    & :global(img) {
+      border-radius: var(--rounded-corner-radius);
+      height: 100%;
+      width: auto;
+    }
+  }
+
+  p {
+    font-size: 1.8rem;
+  }
+</style>

@@ -1,0 +1,40 @@
+---
+import { loadPlatformData } from "./projectAssetLoader";
+
+interface Props {
+  platform: string;
+  url: string;
+}
+
+const { platform, url } = Astro.props;
+const { name, color, Icon } = await loadPlatformData(platform);
+
+const iconAspectRatio = Icon.width / Icon.height;
+---
+
+<a href={url}>
+  <Icon />
+  {name}
+</a>
+
+<style define:vars={{ platformColor: color, iconAspectRatio }}>
+  a {
+    --content-size: 1.5rem;
+    
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    
+    background-color: var(--platformColor);
+    border-radius: 0.5rem;
+    color: white;
+    font-size: var(--content-size);
+    text-decoration: none;
+  }
+
+  a :global(svg) {
+    aspect-ratio: var(--iconAspectRatio);
+    height: calc(var(--content-size) + 0.2rem);
+  }
+</style>
