@@ -6,5 +6,9 @@
   {
     "name": "website",
     "color": "#66f"
+  },
+  {
+    "name": "blog post",
+    "color": "#5505c6"
   }
 ]
