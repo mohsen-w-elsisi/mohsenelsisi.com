@@ -1,5 +1,6 @@
 {
   "firebase": "firebase.png",
   "flutter": "flutter.svg",
-  "typescript": "typescript.svg"
+  "typescript": "typescript.svg",
+  "npm": "npm.svg"
 }

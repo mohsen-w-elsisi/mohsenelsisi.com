@@ -1,5 +1,5 @@
 ---
-import "../styles/blog-typography.css";
+import "../styles/typography.css";
 import type { MarkdownHeading } from "astro";
 import Layout from "./Layout.astro";
 import Header from "../components/Header.astro";
@@ -18,7 +18,7 @@ const { title, date, headings } = Astro.props;
 <Layout>
   <Header />
   <TocButton headings={headings} client:load />
-  <main class="blog-content">
+  <main class="readable-typography">
     <h1>{title}</h1>
     <span id="byline">
         Written by Mohsen Elsisi, {readableDate(date)}

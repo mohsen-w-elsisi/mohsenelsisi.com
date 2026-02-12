@@ -1,4 +1,5 @@
 ---
+import "../../styles/typography.css";
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
@@ -36,7 +37,9 @@ const ProjectDetails = (await render(project)).Content;
     <div class="showcase-images">
       {images.map((image) => <Image src={image} alt="" />)}
     </div>
-    <ProjectDetails />
+    <div class="readable-typography">
+      <ProjectDetails />
+    </div>
   </main>
 </Layout>
 
@@ -71,10 +74,5 @@ const ProjectDetails = (await render(project)).Content;
       border-top-right-radius: var(--rounded-corner-radius);
       border-bottom-right-radius: var(--rounded-corner-radius);
     }
-  }
-
-  main :global(p) {
-    font-size: 1.8rem;
-    margin-bottom: 0.8rem;
   }
 </style>

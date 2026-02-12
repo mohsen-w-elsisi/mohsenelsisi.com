@@ -10,5 +10,9 @@
   {
     "name": "blog post",
     "color": "#5505c6"
+  },
+  {
+    "name": "npm",
+    "color": "rgb(208, 75, 75)"
   }
 ]
