@@ -1,39 +1,64 @@
 <script lang="ts">
-  import LeftArrow from "../../assets/icons/arrows/left.svg?raw";
-  import RightArrow from "../../assets/icons/arrows/right.svg?raw";
+  import { onMount } from "svelte";
+  import { fade } from "svelte/transition";
+  import leftArrowSvg from "../../assets/icons/arrows/left.svg?raw";
+  import rightArrowSvg from "../../assets/icons/arrows/right.svg?raw";
 
   const { images } = $props() as {
     images: ImageMetadata[];
   };
 
-  let currentlySelecetdElement = 0;
+  let isFirstImageShown = $state(true);
+  let isLastImageShown = $state(false);
+
+  onMount(() => {
+    updateBorderImageVisiblities();
+    showcaseContainer.addEventListener("scroll", updateBorderImageVisiblities);
+  });
+
+  function updateBorderImageVisiblities() {
+    isFirstImageShown = showcaseContainer.scrollLeft == 0;
+    isLastImageShown =
+      showcaseContainer.scrollLeft + showcaseContainer.clientWidth >=
+      showcaseContainer.scrollWidth - 1;
+  }
 
   function nextImage() {
-    if (isAtLastElement() && !isLastElementVisible()) return;
-    currentlySelecetdElement++;
-    updateScrollPosition();
+    let nextUnshownElement: Element | undefined;
+
+    for (const element of showcaseContainer.children) {
+      if (
+        element.getBoundingClientRect().right >
+        showcaseContainer.getBoundingClientRect().right
+      ) {
+        nextUnshownElement = element;
+        break;
+      }
+    }
+
+    nextUnshownElement?.scrollIntoView({
+      inline: "center",
+      block: "nearest",
+      behavior: "smooth",
+    });
   }
 
   function previousImage() {
-    if (isAtFirstElement()) return;
-    currentlySelecetdElement--;
-    updateScrollPosition();
-  }
+    let firstUnshownElement: Element | undefined;
 
-  const isAtFirstElement = () => currentlySelecetdElement == 0;
-  const isAtLastElement = () =>
-    currentlySelecetdElement == showcaseContainer.children.length - 1;
+    for (const element of [...showcaseContainer.children].toReversed()) {
+      if (
+        element.getBoundingClientRect().left <
+        showcaseContainer.getBoundingClientRect().left
+      ) {
+        firstUnshownElement = element;
+        break;
+      }
+    }
 
-  const isLastElementVisible = () => {
-    const lastElement =
-      showcaseContainer.children[showcaseContainer.children.length - 1];
-    return lastElement.getBoundingClientRect().right <= window.innerWidth;
-  };
-
-  function updateScrollPosition() {
-    const activeElement = showcaseContainer.children[currentlySelecetdElement];
-    activeElement.scrollIntoView({
+    firstUnshownElement?.scrollIntoView({
       inline: "center",
+      block: "nearest",
       behavior: "smooth",
     });
   }
@@ -43,12 +68,25 @@
 
 <div class="showcase-carousel">
   <div class="carousel-buttons">
-    <button onclick={previousImage} class="previous">
-      {@html LeftArrow}
-    </button>
-    <button onclick={nextImage} class="next">
-      {@html RightArrow}
-    </button>
+    {#if !isFirstImageShown}
+      <button
+        onclick={previousImage}
+        transition:fade={{ duration: 200 }}
+        class="previous"
+      >
+        {@html leftArrowSvg}
+      </button>
+    {/if}
+
+    {#if !isLastImageShown}
+      <button
+        onclick={nextImage}
+        transition:fade={{ duration: 200 }}
+        class="next"
+      >
+        {@html rightArrowSvg}
+      </button>
+    {/if}
   </div>
 
   <div class="showcase-images" bind:this={showcaseContainer}>
@@ -63,6 +101,12 @@
     position: relative;
     height: 20rem;
     margin: 2rem 0;
+
+    &:hover {
+      .carousel-buttons button {
+        opacity: 1;
+      }
+    }
   }
 
   .showcase-images {
@@ -109,7 +153,6 @@
     right: 0;
 
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin: 0 1rem;
 
@@ -125,6 +168,16 @@
       opacity: 0.8;
       border: none;
       border-radius: 100%;
+
+      transition-duration: 200ms;
+      opacity: 0;
+
+      &.previous {
+        margin-right: auto;
+      }
+      &.next {
+        margin-left: auto;
+      }
 
       svg {
         width: 100%;
