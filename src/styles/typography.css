@@ -51,4 +51,15 @@
   strong {
     font-weight: 600;
   }
+
+  code {
+    background-color: var(--surface-color); 
+    padding: 0.1em 0.4em; 
+    border-radius: 3px; 
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 }
