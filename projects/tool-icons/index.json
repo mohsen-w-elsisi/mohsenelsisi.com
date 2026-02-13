@@ -2,5 +2,7 @@
   "firebase": "firebase.png",
   "flutter": "flutter.svg",
   "typescript": "typescript.svg",
-  "npm": "npm.svg"
+  "npm": "npm.svg",
+  "svelte": "svelte.png",
+  "tailwind": "tailwind.svg"
 }
