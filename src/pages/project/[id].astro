@@ -11,6 +11,7 @@ import { Image } from "astro:assets";
 import ProjectPlatformChip from "../../components/projects/ProjectPlatformChip.astro";
 import Header from "../../components/Header.astro";
 import { render } from "astro:content";
+import ProjectShowcaseImages from "../../components/projects/ProjectShowcaseImages.svelte";
 
 export const getStaticPaths = (async () => {
   const projects = await getCollection("projects");
@@ -31,6 +32,7 @@ const ProjectDetails = (await render(project)).Content;
   <Header />
   <main>
     <h1>{Icon ? <Icon /> : ""}{project.data.title}</h1>
+
     <div class="links">
       {
         project.data.links.map((link) => (
@@ -38,9 +40,9 @@ const ProjectDetails = (await render(project)).Content;
         ))
       }
     </div>
-    <div class="showcase-images">
-      {images.map((image) => <Image src={image} alt="" />)}
-    </div>
+    
+    <ProjectShowcaseImages images={images} client:load />
+
     <div class="readable-typography">
       <p><b>Tools used:</b> {project.data.tools.join(", ")}</p>
       <ProjectDetails />
@@ -66,27 +68,5 @@ const ProjectDetails = (await render(project)).Content;
   .links {
     display: flex;
     gap: 0.8rem;
-  }
-
-  .showcase-images {
-    display: flex;
-    gap: 0.8rem;
-    height: 20rem;
-    margin: 2rem 0;
-
-    & :global(img) {
-      height: 100%;
-      width: auto;
-    }
-
-    & img:first-child {
-      border-top-left-radius: var(--rounded-corner-radius);
-      border-bottom-left-radius: var(--rounded-corner-radius);
-    }
-
-    & img:last-child {
-      border-top-right-radius: var(--rounded-corner-radius);
-      border-bottom-right-radius: var(--rounded-corner-radius);
-    }
   }
 </style>
