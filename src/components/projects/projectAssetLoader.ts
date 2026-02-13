@@ -1,4 +1,5 @@
 import type { ImageMetadata } from "astro";
+import { AstroError } from "astro/errors";
 import type { SvgComponent } from "astro/types";
 import { readdir } from "fs/promises";
 import path from "path";
@@ -9,6 +10,10 @@ const toolIconsDir = path.resolve(projectDir, "./tool-icons");
 const platformsDir = path.resolve(projectDir, "./platforms");
 
 const projectImageDir = (id: string) => path.resolve(imagesDir, `./${id}`);
+
+const projectIconName = "icon.svg";
+
+const ignoredShowcaseImages = [projectIconName];
 
 const toolIconsIndex = (await import(
   path.resolve(toolIconsDir, "./index.json")
@@ -42,16 +47,27 @@ export function loadPreviewImage(projectId: string) {
   return image;
 }
 
-export async function loadShowcaseImages(projectId: String) {
+export async function loadShowcaseImages(projectId: string) {
   const shocaseImageDir = projectImageDir(projectId);
   const getfullImagePath = (imageName: string) => {
     return path.resolve(shocaseImageDir, `${imageName}`);
   };
   return await Promise.all(
     (await readdir(shocaseImageDir))
+      .filter((imageName) => !ignoredShowcaseImages.includes(imageName))
       .map(getfullImagePath)
       .map(loadImageFromPath),
   );
+}
+
+export async function loadProjectIcon(projectId: string) {
+  const iconPath = path.resolve(projectImageDir(projectId), projectIconName);
+  try {
+    const image = await loadSvgFromPath(iconPath);
+    return image;
+  } catch (e) {
+    return null;
+  }
 }
 
 export function loadToolIcon(toolName: string) {
