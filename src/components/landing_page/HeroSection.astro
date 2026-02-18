@@ -1,13 +1,16 @@
 ---
 import Header from "../Header.astro";
 import SocialIcons from "../SocialIcons.astro";
+import heroMe from "../../assets/hero-me.webp";
+import { Image } from "astro:assets";
 ---
 
 <section id="hero">
   <Header />
   <div id="hero-content">
     <div id="hero-photo">
-      <span></span>
+      <Image src={heroMe} alt="Mohsen Elsisi" />
+      <span class="hero-gradiant"></span>
     </div>
     <h1>Hello World! <br /> I'm Mohsen.</h1>
     <div id="hero-details">
@@ -49,12 +52,6 @@ import SocialIcons from "../SocialIcons.astro";
     align-items: center;
   }
 
-  #hero-photo span {
-    width: 100%;
-    height: 100%;
-    background-color: red;
-  }
-
   #hero-details {
     grid-area: details;
 
@@ -75,6 +72,32 @@ import SocialIcons from "../SocialIcons.astro";
       grid-template-rows: min-content 1fr;
       align-items: top;
       column-gap: 3.5rem;
+    }
+
+    #hero-photo {
+      & :global(img) {
+        width: auto;
+        height: 80vh;
+        border-radius: var(--rounded-corner-radius);
+      }
+    }
+  }
+
+  @media (max-width: 767px) {
+    #hero-photo {
+      & :global(img) {
+        width: 100%;
+        height: auto;
+        border-radius: var(--rounded-corner-radius);
+      }
+    }
+
+    #hero-details {
+      margin: 1rem 0;
+
+      & :global(.social-icons) {
+        margin-top: 1rem;
+      }
     }
   }
 </style>
