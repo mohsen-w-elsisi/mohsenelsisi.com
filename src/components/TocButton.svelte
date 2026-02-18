@@ -28,6 +28,17 @@
 
       closeToc();
     });
+
+    let lastScrollY = window.scrollY;
+
+    document.addEventListener("scroll", () => {
+      if (window.scrollY > lastScrollY) {
+        tocButton.classList.add("hide");
+      } else {
+        tocButton.classList.remove("hide");
+      }
+      lastScrollY = window.scrollY;
+    });
   });
 </script>
 
@@ -67,12 +78,21 @@
   :root {
     --transition-duration: 300ms;
     --transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+    --toc-bottom: 2rem;
+    --toc-left: 2rem;
+  }
+
+  @media (max-width: 600px) {
+    :root {
+      --toc-bottom: .5rem;
+      --toc-left: .5rem;
+    }
   }
 
   button {
     position: fixed;
-    bottom: 2rem;
-    left: 2rem;
+    bottom: var(--toc-bottom);
+    left: var(--toc-left);
 
     background-color: var(--primary-color);
     box-shadow: var(--shadow);
@@ -90,15 +110,16 @@
       height: 100%;
     }
 
-    &.maximised {
+    &.maximised,
+    :global(&.hide) {
       opacity: 0;
     }
   }
 
   aside {
     position: fixed;
-    bottom: 2rem;
-    left: 2rem;
+    bottom: var(--toc-bottom);
+    left: var(--toc-left);
 
     max-height: 70vw;
 
