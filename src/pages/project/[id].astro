@@ -7,7 +7,6 @@ import {
   loadProjectIcon,
   loadShowcaseImages,
 } from "../../components/projects/projectAssetLoader";
-import { Image } from "astro:assets";
 import ProjectPlatformChip from "../../components/projects/ProjectPlatformChip.astro";
 import Header from "../../components/Header.astro";
 import { render } from "astro:content";
@@ -40,7 +39,7 @@ const ProjectDetails = (await render(project)).Content;
         ))
       }
     </div>
-    
+
     <ProjectShowcaseImages images={images} client:load />
 
     <div class="readable-typography">
@@ -52,7 +51,6 @@ const ProjectDetails = (await render(project)).Content;
 
 <style>
   main {
-    padding: 0 2rem;
     padding-bottom: 1rem;
   }
 
@@ -68,5 +66,17 @@ const ProjectDetails = (await render(project)).Content;
   .links {
     display: flex;
     gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  @media (min-width: 768px) {
+    main {
+      padding-inline: 2rem;
+    }
+  }
+  @media (max-width: 767px) {
+    main {
+      padding-inline: 1rem;
+    }
   }
 </style>
