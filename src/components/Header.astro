@@ -1,20 +1,22 @@
 ---
 import { Image } from "astro:assets";
 import myAvatar from "../assets/me.jpg";
+import Menu from "./Menu.svelte";
 ---
 
 <header>
   <a href="/" id="avatar">
     <Image src={myAvatar} alt="Mohsen's Avatar" />
   </a>
-  <nav>
+  <nav class="large-menu">
     <a href="/">Home</a>
     <a href="/projects">Projects</a>
     <a href="/blog">Blog</a>
     <a href="/about">About</a>
     <a href="/resume">Resume</a>
   </nav>
-  <br />
+  <br class="large-menu" />
+  <span class="mobile-menu"><Menu client:only /></span>
 </header>
 
 <style>
@@ -54,7 +56,19 @@ import myAvatar from "../assets/me.jpg";
   }
 
   @media (max-width: 720px) {
-    nav {
+    .large-menu {
+      display: none;
+    }
+    .mobile-menu {
+      display: block;
+    }
+  }
+
+  @media (min-width: 721px) {
+    .large-menu {
+      display: flex;
+    }
+    .mobile-menu {
       display: none;
     }
   }

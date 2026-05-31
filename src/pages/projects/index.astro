@@ -32,5 +32,9 @@ projects.sort(
     gap: var(--project-card-spacing);
 
     padding: 0;
+
+    & > :global(*) {
+      overflow: hidden; /* just a hack */
+    }
   }
 </style>
