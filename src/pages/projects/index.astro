@@ -1,0 +1,36 @@
+---
+import Header from "../../components/Header.astro";
+import Layout from "../../layouts/Layout.astro";
+import ProjectCard from "../../components/projects/ProjectCard.astro";
+import { getCollection } from "astro:content";
+
+const projects = await getCollection("projects");
+projects.sort(
+  (a, b) => (b.data.favourite ? 1 : 0) - (a.data.favourite ? 1 : 0),
+);
+---
+
+<Layout>
+  <Header />
+  <main>
+    <h1>projects</h1>
+    <ol>
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </ol>
+  </main>
+</Layout>
+
+<style>
+  main {
+    padding: 0 2rem;
+  }
+  
+  ol {    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--project-card-width), 1fr));
+    grid-auto-rows: var(--project-row-height);
+    gap: var(--project-card-spacing);
+
+    padding: 0;
+  }
+</style>

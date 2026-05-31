@@ -1,4 +1,6 @@
 :root {
+  /* general variables */
+  
   --primary-color: #5505c6;
   --surface-color: #d6d9f8;
   --dark-color: #000;
@@ -11,7 +13,29 @@
   --rounded-corner-radius: 20px;
 
   --shadow: 0px 10px 19px 21px rgba(0, 0, 0, 0.1);
+
+  
+  /* specific component variables */
+
+  --landing-page-section-x-pad: 3.5rem;
+  
+  --card-grid-max-width: 1200px;
+
+  --project-card-spacing: min(2vw, 2rem);
+  --project-row-height: 60vh;
+  --project-card-width: 18rem;
+
+  --blog-card-single-col-grid-max-width: 760px;
 }
+
+@media (max-width: 768px) {
+  :root {
+    --landing-page-section-x-pad: 1rem;
+    
+    --project-card-width: 80%;
+  }
+}
+
 
 html,
 body {
@@ -74,4 +98,12 @@ p {
 
 svg {
   stroke: var(--dark-color);
+}
+
+.see-more {
+  margin-bottom: 2rem;
+  margin-right: auto;
+  margin-left: auto;
+
+  font-size: var(--display-body-font-size);
 }
