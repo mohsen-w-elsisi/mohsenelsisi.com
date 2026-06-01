@@ -5,6 +5,7 @@ import { readdir } from "fs/promises";
 import path from "path";
 
 const projectDir = path.resolve(process.cwd(), "./projects");
+import { readFile } from "fs/promises";
 const imagesDir = path.resolve(projectDir, "./images");
 const toolIconsDir = path.resolve(projectDir, "./tool-icons");
 const platformsDir = path.resolve(projectDir, "./platforms");
@@ -15,30 +16,62 @@ const projectIconName = "icon.svg";
 
 const ignoredShowcaseImages = [projectIconName];
 
-const toolIconsIndex = (await import(
-  path.resolve(toolIconsDir, "./index.json")
-)) as {
+// Eagerly import all project images so Vite includes them in the build output.
+const projectImageModules = import.meta.glob(
+  "/projects/images/**",
+  { eager: true },
+) as Record<string, any>;
+
+const toolImageModules = import.meta.glob(
+  "/projects/tool-icons/**",
+  { eager: true },
+) as Record<string, any>;
+
+const platformSvgModules = import.meta.glob(
+  "/projects/platforms/**",
+  { eager: true },
+) as Record<string, any>;
+
+const toolSvgModules = import.meta.glob(
+  "/projects/tool-icons/**",
+  { eager: true },
+) as Record<string, any>;
+
+const toolIconsIndex = JSON.parse(
+  await readFile(path.resolve(toolIconsDir, "./index.json"), {
+    encoding: "utf-8",
+  }),
+) as {
   [key: string]: string;
 };
 
-const platformIndex = (await import(path.resolve(platformsDir, "./index.json")))
-  .default as {
+const platformIndex = JSON.parse(
+  await readFile(path.resolve(platformsDir, "./index.json"), {
+    encoding: "utf-8",
+  }),
+) as {
   name: string;
   color: string;
 }[];
 
 async function loadImageFromPath(imaePath: string) {
-  const imageImport = await (import(imaePath) as Promise<{
-    default: ImageMetadata;
-  }>);
-  return imageImport.default;
+  const rel = path.relative(process.cwd(), imaePath).replace(/\\/g, "/");
+  const key = "/" + rel;
+  const mod = projectImageModules[key] ?? toolImageModules[key];
+  if (mod) return mod.default ?? mod;
+
+  throw new Error(`Image not found at path: ${imaePath}`);
 }
 
 async function loadSvgFromPath(svgPath: string) {
-  const svgImport = await (import(svgPath) as Promise<{
-    default: SvgComponent & ImageMetadata;
-  }>);
-  return svgImport.default;
+  const rel = path.relative(process.cwd(), svgPath).replace(/\\/g, "/");
+  const key = "/" + rel;
+  const fromPlatforms = platformSvgModules[key];
+  if (fromPlatforms) return fromPlatforms.default ?? fromPlatforms;
+  const fromTools = toolSvgModules[key];
+  if (fromTools) return fromTools.default ?? fromTools;
+
+  throw new Error(`Image not found at path: ${svgPath}`);
 }
 
 export function loadPreviewImage(projectId: string) {
