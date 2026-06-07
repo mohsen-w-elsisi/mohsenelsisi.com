@@ -1,0 +1,29 @@
+---
+import { Image } from "astro:assets";
+import loadContentImage from "./loadContentImage";
+
+interface Props {
+  src: string;
+  title?: string;
+  alt?: string;
+}
+
+const { src, title, alt } = Astro.props;
+
+const contentImage = loadContentImage(src);
+
+const SvgIcon = contentImage.type === "svg" ? contentImage.svgComponent : null;
+---
+
+{
+  SvgIcon ? (
+    <SvgIcon title={title} class="content-image", title={title} />
+  ) : (
+    <Image
+      src={contentImage.rasterMetadata}
+      alt={alt || ""}
+      title={title}
+      class="content-image"
+    />
+  )
+}

@@ -1,5 +1,6 @@
 ---
-import { loadPlatformData } from "./projectAssetLoader";
+import { getEntry } from 'astro:content';
+import loadContentImage from '../contentImage/loadContentImage';
 
 interface Props {
   platform: string;
@@ -7,9 +8,10 @@ interface Props {
 }
 
 const { platform, url } = Astro.props;
-const { name, color, Icon } = await loadPlatformData(platform);
+const { name, color, icon } = (await getEntry('platforms', platform))!.data;
 
-const iconAspectRatio = Icon.width / Icon.height;
+const Icon = loadContentImage(icon).svgComponent;
+// const iconAspectRatio = Icon.width / Icon.height;
 ---
 
 <a href={url}>
@@ -17,7 +19,7 @@ const iconAspectRatio = Icon.width / Icon.height;
   {name}
 </a>
 
-<style define:vars={{ platformColor: color, iconAspectRatio }}>
+<style define:vars={{ platformColor: color, /* iconAspectRatio */ }}>
   a {
     --content-size: 1.5rem;
     
@@ -36,7 +38,7 @@ const iconAspectRatio = Icon.width / Icon.height;
   }
 
   a :global(svg) {
-    aspect-ratio: var(--iconAspectRatio);
+    /* aspect-ratio: var(--iconAspectRatio); */
     height: calc(var(--content-size) + 0.2rem);
   }
 </style>

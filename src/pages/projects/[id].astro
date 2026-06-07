@@ -3,14 +3,11 @@ import "../../styles/typography.css";
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import {
-  loadProjectIcon,
-  loadShowcaseImages,
-} from "../../components/projects/projectAssetLoader";
 import ProjectPlatformChip from "../../components/projects/ProjectPlatformChip.astro";
 import Header from "../../components/Header.astro";
 import { render } from "astro:content";
 import ProjectShowcaseImages from "../../components/projects/ProjectShowcaseImages.svelte";
+import loadContentImage from "../../components/contentImage/loadContentImage";
 
 export const getStaticPaths = (async () => {
   const projects = await getCollection("projects");
@@ -22,15 +19,22 @@ export const getStaticPaths = (async () => {
 
 const { project } = Astro.props;
 
-const Icon = await loadProjectIcon(project.id);
-const images = await loadShowcaseImages(project.id);
+const Icon = project.data.icon
+  ? loadContentImage(project.data.icon)
+  : undefined;
+const showcaseImages = project.data.showcaseImages.map(
+  (imagePath) => loadContentImage(imagePath).rasterMetadata.src,
+);
 const ProjectDetails = (await render(project)).Content;
 ---
 
 <Layout>
   <Header />
   <main>
-    <h1>{Icon ? <Icon /> : ""}{project.data.title}</h1>
+    <h1>
+      {Icon ? <Icon.svgComponent /> : ""}
+      {project.data.title}
+    </h1>
 
     <div class="links">
       {
@@ -40,7 +44,7 @@ const ProjectDetails = (await render(project)).Content;
       }
     </div>
 
-    <ProjectShowcaseImages images={images} client:load />
+    <ProjectShowcaseImages images={showcaseImages} client:load />
 
     <div class="readable-typography">
       <p><b>Tools used:</b> {project.data.tools.join(", ")}</p>

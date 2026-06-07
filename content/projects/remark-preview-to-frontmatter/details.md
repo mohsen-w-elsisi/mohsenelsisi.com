@@ -1,19 +1,3 @@
----
-title: remark-preview-to-frontmatter
-favourite: false
-description: remark plugin to add text from the beginning of a document to a property in frontmatter.
-tools:
-  - typescript
-  - npm
-links:
-  - platform: npm
-    url: https://www.npmjs.com/package/remark-preview-to-frontmatter
-  - platform: github
-    url: https://github.com/mohsen-w-elsisi/remark-preview-to-frontmatter
-  - platform: blog post
-    url: https://mohsenelsisi.com/blog/remark-preview-to-frontmatter/
----
-
 `remark-preview-to-frontmatter` is a package and I developed which extracts a snippet from the top of a markdown file and adds it as a property in the frontmatter yaml. Specificallly, it is a `remark` plugin. the package is freely available on npm.
 
 As explained in the associated blog post, developing this package taught me:

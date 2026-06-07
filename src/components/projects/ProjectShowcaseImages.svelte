@@ -4,9 +4,7 @@
   import leftArrowSvg from "../../assets/icons/arrows/left.svg?raw";
   import rightArrowSvg from "../../assets/icons/arrows/right.svg?raw";
 
-  const { images } = $props() as {
-    images: ImageMetadata[];
-  };
+  const { images }: { images: string[] } = $props();
 
   let isFirstImageShown = $state(true);
   let isLastImageShown = $state(false);
@@ -131,7 +129,7 @@
 
   <div class="showcase-images" bind:this={showcaseContainer}>
     {#each images as image}
-      <img src={image.src} alt="" />
+      <img src={image} alt="" />
     {/each}
   </div>
 

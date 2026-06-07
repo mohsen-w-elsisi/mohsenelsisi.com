@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { Image } from "astro:assets";
-import { loadPreviewImage, loadToolIcons } from "./projectAssetLoader";
+import { getEntry } from "astro:content";
+import ContentImageWidget from "../contentImage/ContentImageWidget.astro";
 
 interface Props {
   project: CollectionEntry<"projects">;
@@ -9,18 +9,27 @@ interface Props {
 
 const { project } = Astro.props;
 
-const previewImage = loadPreviewImage(project.id);
-const toolIcons = loadToolIcons(project.data.tools);
+const toolIcons = await Promise.all(
+  project.data.tools.map(async (toolName) => {
+    const tool = await getEntry("tools", toolName);
+    if (!tool) throw Error(`Tool ${toolName} not found in tools collection`);
+    return tool.data;
+  }),
+);
 ---
 
 <a href=`/projects/${project.id}` class="card project-card">
   <h3>{project.data.title}</h3>
-  <Image src={previewImage} alt={project.data.title} />
+  <ContentImageWidget
+    src={project.data.thumbnail}
+    title={project.data.title}
+    alt={`${project.data.title} thumbnail`}
+  />
   <p>{project.data.description}</p>
   <div class="project-tool-icons">
     {
-      toolIcons.map((icon, i) => (
-        <Image src={icon} alt={""} title={project.data.tools[i]} />
+      toolIcons.map(({ icon, name }) => (
+        <ContentImageWidget src={icon} title={name} />
       ))
     }
   </div>
@@ -33,7 +42,7 @@ const toolIcons = loadToolIcons(project.data.tools);
     gap: var(--project-card-content-gap);
   }
 
-  .project-card > img {
+  .project-card > :global(.content-image) {
     width: 100%;
     aspect-ratio: 16/9;
     object-fit: cover;
@@ -57,10 +66,11 @@ const toolIcons = loadToolIcons(project.data.tools);
     display: flex;
     gap: 0.5rem;
     justify-content: end;
+  }
 
-    img {
-      width: 2rem;
-      height: 2rem;
-    }
+  :global(.project-tool-icons >.content-image) {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
   }
 </style>

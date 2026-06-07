@@ -1,4 +1,3 @@
----
 title: talk a hike
 favourite: true
 description: A social media platform to share travel experiences envolving nature
@@ -10,6 +9,4 @@ links:
   - platform: github
     url: https://github.com/mohsen-w-elsisi/talk-a-hike
   - platform: website
-    url: https://talk-a-hike-m.web.app/
----
-hello worldreadable-typography
+    url: https://talk-a-hike-m.web.app

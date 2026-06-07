@@ -1,11 +1,14 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
+import projectLoader from "./contentLoaders/projectContentLoader";
+import toolLoader from "./contentLoaders/toolLoader";
+import platformLoader from "./contentLoaders/platformLoader";
 
 const posts = defineCollection({
   loader: glob({
     pattern: "**/*.md",
-    base: "./posts",
+    base: "content/posts",
   }),
   schema: z.object({
     title: z.string(),
@@ -14,22 +17,21 @@ const posts = defineCollection({
 });
 
 const projects = defineCollection({
-  loader: glob({
-    pattern: "**/*.md",
-    base: "./projects",
-  }),
-  schema: z.object({
-    title: z.string(),
-    favourite: z.boolean(),
-    description: z.string(),
-    tools: z.array(z.string()),
-    links: z.array(
-      z.object({
-        platform: z.string(),
-        url: z.string(),
-      }),
-    ),
+  loader: projectLoader({
+    rootDir: "content/projects",
   }),
 });
 
-export const collections = { posts, projects };
+const tools = defineCollection({
+  loader: toolLoader({
+    toolDir: "content/tools",
+  }),
+});
+
+const platforms = defineCollection({
+  loader: platformLoader({
+    rootDir: "content/platforms",
+  }),
+});
+
+export const collections = { posts, projects, tools, platforms };

@@ -1,0 +1,13 @@
+title: remark-preview-to-frontmatter
+favourite: false
+description: remark plugin to add text from the beginning of a document to a property in frontmatter.
+tools:
+  - typescript
+  - npm
+links:
+  - platform: npm
+    url: https://www.npmjs.com/package/remark-preview-to-frontmatter
+  - platform: github
+    url: https://github.com/mohsen-w-elsisi/remark-preview-to-frontmatter
+  - platform: blog post
+    url: https://mohsenelsisi.com/blog/remark-preview-to-frontmatter/
