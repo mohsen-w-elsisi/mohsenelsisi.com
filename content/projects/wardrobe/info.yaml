@@ -1,6 +1,8 @@
 title: wardrobe
-favourite: false
+favourite: true
 description: an app to help you manage your clothes
 tools:
   - flutter
-links: []
+links: 
+  - platform: github
+    url: https://github.com/mohsen-w-elsisi/wardrobe_app

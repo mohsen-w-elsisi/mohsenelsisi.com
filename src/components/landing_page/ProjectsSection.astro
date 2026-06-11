@@ -3,6 +3,9 @@ import { getCollection } from "astro:content";
 import ProjectCard from "../projects/ProjectCard.astro";
 
 const projects = await getCollection("projects");
+projects.sort(
+  (a, b) => (b.data.favourite ? 1 : 0) - (a.data.favourite ? 1 : 0),
+);
 const previewProjects = projects.slice(0, 3);
 ---
 

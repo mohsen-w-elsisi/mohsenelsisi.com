@@ -23,7 +23,7 @@ export default function projectLoader(options: ProjectLoaderOptions): Loader {
           data: {
             ...parseYaml(await readFile(filePaths.info, "utf-8")),
             resume: await readFile(filePaths.resume, "utf-8"),
-            thumbnail: filePaths.thumbnail,
+            thumbnail: await getThumbnailImage(filePaths.images),
             showcaseImages: await getShowcaseImages(filePaths.images),
             icon: (await projectHasIcon(folderPath))
               ? join(filePaths.images, "icon.svg")
@@ -65,16 +65,24 @@ function getFilePaths(folderPath: string) {
     details: join(folderPath, "details.md"),
     resume: join(folderPath, "resume.md"),
     images: join(folderPath, "images"),
-    thumbnail: join(folderPath, "images", "thumbnail.png"),
   };
+}
+
+async function getThumbnailImage(imagesDir: string) {
+  const allImages = await readdir(imagesDir);
+  const thumbnail = allImages.find((file) => file.startsWith("thumbnail"));
+  if (!thumbnail) {
+    throw new Error(`No thumbnail image found in ${imagesDir}`);
+  }
+  return join(imagesDir, thumbnail);
 }
 
 async function getShowcaseImages(imagesDir: string) {
   return (await readdir(imagesDir))
     .filter((file) => !file.startsWith("icon"))
     .toSorted((left, right) => {
-      if (left === "thumbnail.png") return -1;
-      if (right === "thumbnail.png") return 1;
+      if (left.startsWith("thumbnail")) return -1;
+      if (right.startsWith("thumbnail")) return 1;
       const leftNum = parseInt(left.split(".")[0]);
       const rightNum = parseInt(right.split(".")[0]);
       return leftNum - rightNum;
