@@ -38,11 +38,12 @@ const previewProjects = projects.slice(0, 3);
 
     display: flex;
     justify-content: center;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow-x: scroll;
     gap: var(--project-card-spacing);
-
+    
     scroll-snap-type: x mandatory;
+
+    overflow-y: visible;
   }
 
   #projects-row > :global(*) {

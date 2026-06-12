@@ -16,14 +16,14 @@ const iconPath = tool.data.icon;
 {
   style === "icon" ? (
     <div class="icon">
-      <ContentImageWidget src={iconPath} title={toolName} />
+      <ContentImageWidget src={iconPath} alt={toolName} />
       <div class="tooltip">
         <span>{toolName}</span>
       </div>
     </div>
   ) : (
     <div class="chip">
-      <ContentImageWidget src={iconPath} title={toolName} />
+      <ContentImageWidget src={iconPath} />
       <span>{toolName}</span>
     </div>
   )
@@ -53,7 +53,7 @@ const iconPath = tool.data.icon;
       background-color: var(--dark-color);
       color: var(--surface-color);
       
-      font: var(--font-sans);
+      font-family: var(--font-sans);
       text-transform: capitalize;
       
     }

@@ -6,7 +6,7 @@ tools:
   - firebase
 links:
   - platform: blog post
-    url: https://mohsenelsisi.com/blog/procedural-terrain-generation/
+    url: https://mohsenelsisi.com/blog/how-minecraft-has-an-infinite-amount-worlds/
   - platform: github
     url: https://github.com/mohsen-w-elsisi/procedural-terrain-gen
   - platform: website
