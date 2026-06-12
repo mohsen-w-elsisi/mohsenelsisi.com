@@ -1,50 +1,49 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { getEntry } from "astro:content";
 import ContentImageWidget from "../contentImage/ContentImageWidget.astro";
+import ToolChip from "../ToolChip.astro";
 
 interface Props {
   project: CollectionEntry<"projects">;
 }
 
-const { project } = Astro.props;
-
-const toolIcons = await Promise.all(
-  project.data.tools.map(async (toolName) => {
-    const tool = await getEntry("tools", toolName);
-    if (!tool) throw Error(`Tool ${toolName} not found in tools collection`);
-    return tool.data;
-  }),
-);
+const { id, data } = Astro.props.project;
+const { title, description, thumbnail, tools } = data;
 ---
 
-<a href=`/projects/${project.id}` class="card project-card">
-  <h3>{project.data.title}</h3>
+<a href=`/projects/${id}` class="card project-card">
+  <h3>{title}</h3>
+
   <ContentImageWidget
-    src={project.data.thumbnail}
-    title={project.data.title}
-    alt={`${project.data.title} thumbnail`}
+    src={thumbnail}
+    title={title}
+    alt={`${title} thumbnail`}
   />
-  <p>{project.data.description}</p>
+
+  <p>{description}</p>
+
   <div class="project-tool-icons">
-    {
-      toolIcons.map(({ icon, name }) => (
-        <ContentImageWidget src={icon} title={name} />
-      ))
-    }
+    {tools.map((toolName) => <ToolChip toolName={toolName} style="icon" />)}
   </div>
 </a>
 
 <style>
   .project-card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--project-card-content-gap);
+    display: grid;
+    row-gap: 0.5rem;
+    grid-template-rows:
+      max-content /* title */
+      1fr /* image */
+      3lh /* description */
+      24px /* tool icons */;
+    overflow: visible;
   }
 
   .project-card > :global(.content-image) {
     width: 100%;
-    aspect-ratio: 16/9;
+    height: 100%;
+    overflow: hidden;
+
     object-fit: cover;
     border-radius: 10px;
   }
@@ -53,6 +52,10 @@ const toolIcons = await Promise.all(
     font: var(--card-title-font);
     text-align: center;
     margin: 0;
+
+    height: min-content;
+    margin: auto 0;
+    -webktit-line-clamp: 2;
   }
 
   p {
@@ -61,16 +64,9 @@ const toolIcons = await Promise.all(
 
   .project-tool-icons {
     width: 100%;
-    margin-top: auto;
 
     display: flex;
     gap: 0.5rem;
     justify-content: end;
-  }
-
-  :global(.project-tool-icons >.content-image) {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
   }
 </style>

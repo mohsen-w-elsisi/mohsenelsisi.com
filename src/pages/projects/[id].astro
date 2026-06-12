@@ -8,6 +8,7 @@ import Header from "../../components/Header.astro";
 import { render } from "astro:content";
 import ProjectShowcaseImages from "../../components/projects/ProjectShowcaseImages.svelte";
 import loadContentImage from "../../components/contentImage/loadContentImage";
+import ToolChip from "../../components/ToolChip.astro";
 
 export const getStaticPaths = (async () => {
   const projects = await getCollection("projects");
@@ -18,11 +19,11 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { project } = Astro.props;
+const { id, data } = project;
+const { title, description, tools, links, icon } = data;
 
-const Icon = project.data.icon
-  ? loadContentImage(project.data.icon)
-  : undefined;
-const showcaseImages = project.data.showcaseImages.map(
+const Icon = icon ? loadContentImage(icon) : undefined;
+const showcaseImages = data.showcaseImages.map(
   (imagePath) => loadContentImage(imagePath).rasterMetadata.src,
 );
 const ProjectDetails = (await render(project)).Content;
@@ -33,12 +34,12 @@ const ProjectDetails = (await render(project)).Content;
   <main>
     <h1>
       {Icon ? <Icon.svgComponent /> : ""}
-      {project.data.title}
+      {title}
     </h1>
 
     <div class="links">
       {
-        project.data.links.map((link) => (
+        links.map((link) => (
           <ProjectPlatformChip platform={link.platform} url={link.url} />
         ))
       }
@@ -47,7 +48,11 @@ const ProjectDetails = (await render(project)).Content;
     <ProjectShowcaseImages images={showcaseImages} client:load />
 
     <div class="readable-typography">
-      <p><b>Tools used:</b> {project.data.tools.join(", ")}</p>
+      <div class="tools">
+        <b>Tools used:</b>
+        {tools.map((tool) => <ToolChip toolName={tool} style="chip" />)}
+      </div>
+
       <ProjectDetails />
     </div>
   </main>
@@ -71,6 +76,13 @@ const ProjectDetails = (await render(project)).Content;
     display: flex;
     gap: 0.8rem;
     flex-wrap: wrap;
+  }
+
+  .tools {
+    display: inline-flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    align-items: center;
   }
 
   @media (min-width: 768px) {

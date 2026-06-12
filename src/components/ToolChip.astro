@@ -1,0 +1,89 @@
+---
+import { getEntry } from "astro:content";
+import ContentImageWidget from "./contentImage/ContentImageWidget.astro";
+
+interface Props {
+  toolName: string;
+  style: "icon" | "chip";
+}
+
+const { toolName, style } = Astro.props as Props;
+const tool = await getEntry("tools", toolName);
+if (!tool) throw Error(`Tool ${toolName} not found`);
+const iconPath = tool.data.icon;
+---
+
+{
+  style === "icon" ? (
+    <div class="icon">
+      <ContentImageWidget src={iconPath} title={toolName} />
+      <div class="tooltip">
+        <span>{toolName}</span>
+      </div>
+    </div>
+  ) : (
+    <div class="chip">
+      <ContentImageWidget src={iconPath} title={toolName} />
+      <span>{toolName}</span>
+    </div>
+  )
+}
+
+<style>
+  .icon {
+    position: relative;
+
+    .tooltip {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-top: 0.2rem;
+
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.2s ease-in-out;
+
+      padding: 0.2rem 0.5rem;
+
+      border-radius: var(--rounded-corner-radius);
+
+      box-shadow: var(--shadow);
+      
+      background-color: var(--dark-color);
+      color: var(--surface-color);
+      
+      font: var(--font-sans);
+      text-transform: capitalize;
+      
+    }
+
+    &:hover .tooltip {
+      display: block;
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  :global(.content-image) {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    z-index: 1;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    padding-left: 0.3rem;
+
+    border: 1.5px solid;
+    border-color: var(--dark-color);
+    border-radius: var(--rounded-corner-radius);
+
+    font: var(--font-sans);
+    text-transform: capitalize;
+  }
+</style>
