@@ -1,15 +1,22 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
-  import leftArrowSvg from "../../assets/icons/arrows/left.svg?raw";
-  import rightArrowSvg from "../../assets/icons/arrows/right.svg?raw";
+  import leftArrowSvg from "@assets/icons/arrows/left.svg?raw";
+  import rightArrowSvg from "@assets/icons/arrows/right.svg?raw";
 
-  const { images }: { images: string[] } = $props();
+  const { children }: { children: any } = $props();
 
   let isFirstImageShown = $state(true);
   let isLastImageShown = $state(false);
   let activeImageIndex = $state(0);
   let isScrollable = $state(false);
+
+  let showcaseContainer: HTMLElement | undefined = $state(undefined);
+
+  // astro puts children in a wrapper
+  let showcaseImages: HTMLElement[] = $derived(
+    showcaseContainer?.children[0].children ?? [],
+  );
 
   onMount(() => {
     updateScrollState();
@@ -22,7 +29,6 @@
     };
   });
 
-
   function updateScrollState() {
     isFirstImageShown = showcaseContainer!.scrollLeft == 0;
     isLastImageShown =
@@ -34,26 +40,26 @@
 
     isScrollable = maxScroll > 0;
 
-    if (maxScroll <= 0) {
+    if (!isScrollable) {
       // all images fit on screen, TODO: hide dots
       activeImageIndex = 0;
       return;
     }
 
     let totalImageWidth = 0; // to circumvent gaps causing a problem
-    for (const child of showcaseContainer!.children) {
-      totalImageWidth += (child as HTMLElement).offsetWidth;
+    for (const image of showcaseImages) {
+      totalImageWidth += image.offsetWidth;
     }
 
     let currentCheckpoint = 0;
-    for (let i = 0; i < showcaseContainer!.children.length; i++) {
-      const child = showcaseContainer!.children[i] as HTMLElement;
-      const segmentLength = (child.offsetWidth / totalImageWidth) * maxScroll;
+    for (let i = 0; i < showcaseImages.length; i++) {
+      const image = showcaseImages[i];
+      const segmentLength = (image.offsetWidth / totalImageWidth) * maxScroll;
       currentCheckpoint += segmentLength;
 
       if (
         showcaseContainer!.scrollLeft <= currentCheckpoint ||
-        i === showcaseContainer!.children.length - 1
+        i === showcaseImages.length - 1
       ) {
         activeImageIndex = i;
         break;
@@ -64,7 +70,7 @@
   function nextImage() {
     let nextUnshownElement: Element | undefined;
 
-    for (const element of showcaseContainer!.children) {
+    for (const element of showcaseImages) {
       if (
         element.getBoundingClientRect().right >
         showcaseContainer!.getBoundingClientRect().right
@@ -84,7 +90,7 @@
   function previousImage() {
     let firstUnshownElement: Element | undefined;
 
-    for (const element of [...showcaseContainer!.children].toReversed()) {
+    for (const element of [...showcaseImages].toReversed()) {
       if (
         element.getBoundingClientRect().left <
         showcaseContainer!.getBoundingClientRect().left
@@ -100,8 +106,6 @@
       behavior: "smooth",
     });
   }
-
-  let showcaseContainer: HTMLElement | undefined = $state(undefined);
 </script>
 
 <div class="showcase-carousel">
@@ -128,14 +132,12 @@
   </div>
 
   <div class="showcase-images" bind:this={showcaseContainer}>
-    {#each images as image}
-      <img src={image} alt="" />
-    {/each}
+    {@render children()}
   </div>
 
   {#if isScrollable}
     <div class="dots">
-      {#each images as _, i}
+      {#each showcaseImages as _, i}
         <div class="dot" class:active={i === activeImageIndex}></div>
       {/each}
     </div>
@@ -180,12 +182,12 @@
       scroll-snap-align: center;
     }
 
-    & img:first-child {
+    & :global(img:first-child) {
       border-top-left-radius: var(--rounded-corner-radius);
       border-bottom-left-radius: var(--rounded-corner-radius);
     }
 
-    & img:last-child {
+    & :global(img:last-child) {
       border-top-right-radius: var(--rounded-corner-radius);
       border-bottom-right-radius: var(--rounded-corner-radius);
     }

@@ -12,7 +12,6 @@ const { platform, url } = Astro.props;
 const { name, color, icon } = (await getEntry('platforms', platform))!.data;
 
 const Icon = loadContentImage(icon).svgComponent;
-// const iconAspectRatio = Icon.width / Icon.height;
 ---
 
 <a href={url}>
@@ -21,7 +20,7 @@ const Icon = loadContentImage(icon).svgComponent;
 </a>
 
 <style define:vars={{ platformColor: color, /* iconAspectRatio */ }}>
-  a {
+  a{
     --content-size: 1.5rem;
     
     display: flex;
@@ -32,9 +31,9 @@ const Icon = loadContentImage(icon).svgComponent;
     background-color: var(--platformColor);
     border-radius: 0.5rem;
 
-    color: white;
+    color: white !important;
     font-size: var(--content-size);
-    text-decoration: none;
+    text-decoration: none !important;
     word-break: keep-all;
   }
 

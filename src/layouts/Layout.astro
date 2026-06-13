@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import Header from "../components/Header.astro";
 import "../styles/style.css";
 
@@ -29,7 +30,10 @@ const { title, hideHeader = false } = Astro.props as Props;
     />
 
     <meta name="generator" content={Astro.generator} />
-    <title>Mohsen Elsisi | {title}</title>
+
+    <ClientRouter />
+    
+    <title>Mohsen Elsisi {title && `| ${title}`}</title>
   </head>
   <body>
     {!hideHeader && <Header />}

@@ -10,6 +10,7 @@ import ProjectShowcaseImages from "../../components/projects/ProjectShowcaseImag
 import ToolChip from "../../components/projects/ToolChip.astro";
 import ReadableTypography from "../../components/ReadableTypography.astro";
 import Layout from "../../layouts/Layout.astro";
+import ContentImageWidget from "@components/contentImage/ContentImageWidget.astro";
 
 export const getStaticPaths = (async () => {
   const projects = await getCollection("projects");
@@ -21,16 +22,13 @@ export const getStaticPaths = (async () => {
 
 const { project } = Astro.props;
 const { id, data } = project;
-const { title, description, tools, links, icon } = data;
+const { title, description, tools, links, icon, showcaseImages } = data;
 
 const Icon = icon ? loadContentImage(icon) : undefined;
-const showcaseImages = data.showcaseImages.map(
-  (imagePath) => loadContentImage(imagePath).rasterMetadata.src,
-);
 const ProjectDetails = (await render(project)).Content;
 ---
 
-<Layout>
+<Layout title={title}>
   <main>
     <h1>
       {Icon ? <Icon.svgComponent /> : ""}
@@ -45,7 +43,18 @@ const ProjectDetails = (await render(project)).Content;
       }
     </div>
 
-    <ProjectShowcaseImages images={showcaseImages} client:load />
+    <ProjectShowcaseImages client:load>
+      {
+        showcaseImages.map((src, i) => (
+          <ContentImageWidget
+            src={src}
+            alt={`${title} showcase image`}
+            transition:name={i == 0 ? `project-thumbnail-${id}` : undefined}
+            transition:animate={i == 0 ? "slide" : undefined}
+          />
+        ))
+      }
+    </ProjectShowcaseImages>
 
     <ReadableTypography>
       <div class="tools">

@@ -16,10 +16,10 @@ interface Props {
 const { title, date, headings } = Astro.props;
 ---
 
-<Layout>
+<Layout title={title}>
   <TocButton headings={headings} client:load />
   <ReadableTypography element="main">
-    <h1>{title}</h1>
+    <h1 transition:name={`blog-post-${title}`}>{title}</h1>
     <span id="byline">
       Written by Mohsen Elsisi, {readableDate(date)}
     </span>
