@@ -1,14 +1,15 @@
 ---
-import "../../styles/typography.css";
 import type { GetStaticPaths } from "astro";
+
 import { getCollection } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
-import ProjectPlatformChip from "../../components/projects/ProjectPlatformChip.astro";
-import Header from "../../components/Header.astro";
 import { render } from "astro:content";
-import ProjectShowcaseImages from "../../components/projects/ProjectShowcaseImages.svelte";
+
 import loadContentImage from "../../components/contentImage/loadContentImage";
-import ToolChip from "../../components/ToolChip.astro";
+import ProjectPlatformChip from "../../components/projects/ProjectPlatformChip.astro";
+import ProjectShowcaseImages from "../../components/projects/ProjectShowcaseImages.svelte";
+import ToolChip from "../../components/projects/ToolChip.astro";
+import ReadableTypography from "../../components/ReadableTypography.astro";
+import Layout from "../../layouts/Layout.astro";
 
 export const getStaticPaths = (async () => {
   const projects = await getCollection("projects");
@@ -30,7 +31,6 @@ const ProjectDetails = (await render(project)).Content;
 ---
 
 <Layout>
-  <Header />
   <main>
     <h1>
       {Icon ? <Icon.svgComponent /> : ""}
@@ -47,14 +47,14 @@ const ProjectDetails = (await render(project)).Content;
 
     <ProjectShowcaseImages images={showcaseImages} client:load />
 
-    <div class="readable-typography">
+    <ReadableTypography>
       <div class="tools">
         <b>Tools used:</b>
         {tools.map((tool) => <ToolChip toolName={tool} style="chip" />)}
       </div>
 
       <ProjectDetails />
-    </div>
+    </ReadableTypography>
   </main>
 </Layout>
 

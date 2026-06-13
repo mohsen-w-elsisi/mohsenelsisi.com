@@ -1,4 +1,5 @@
 import type { ImageMetadata } from "astro";
+
 import { readdir } from "fs/promises";
 import path from "path";
 

@@ -1,5 +1,13 @@
 ---
+import Header from "../components/Header.astro";
 import "../styles/style.css";
+
+interface Props {
+  title?: string;
+  hideHeader?: boolean;
+}
+
+const { title, hideHeader = false } = Astro.props as Props;
 ---
 
 <!doctype html>
@@ -21,9 +29,10 @@ import "../styles/style.css";
     />
 
     <meta name="generator" content={Astro.generator} />
-    <title>Mohsen Elsisi</title>
+    <title>Mohsen Elsisi | {title}</title>
   </head>
   <body>
+    {!hideHeader && <Header />}
     <slot />
   </body>
 </html>

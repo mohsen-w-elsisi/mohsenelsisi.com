@@ -1,0 +1,81 @@
+---
+import type { HTMLTag } from "astro/types";
+
+interface Props {
+  element?: HTMLTag;
+}
+
+const Element = Astro.props.element ?? "div";
+---
+
+<Element class="readable-typography">
+  <slot />
+</Element>
+
+<style is:global>
+  .readable-typography {
+    font-family: var(--font-sans);
+    font-size: 1.2rem;
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 0.4rem;
+    }
+
+    #byline {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      display: block;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+    }
+
+    h3 {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+    }
+
+    h4 {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+    }
+
+    h5 {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+    }
+
+    h6 {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+    }
+
+    p {
+      font-family: var(--font-sans);
+      font-size: 1.2rem;
+      margin: 1rem 0;
+    }
+
+    li {
+      margin: 0.5rem 0;
+    }
+
+    strong {
+      font-weight: 600;
+    }
+
+    code {
+      background-color: var(--surface-color);
+      padding: 0.1em 0.4em;
+      border-radius: 3px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+</style>

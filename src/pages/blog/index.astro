@@ -1,15 +1,14 @@
 ---
-import Header from "../../components/Header.astro";
-import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
-import BlogCardGrid from "../../components/BlogCardGrid.astro";
+
+import BlogCardGrid from "../../components/blog/BlogCardGrid.astro";
+import Layout from "../../layouts/Layout.astro";
 
 const posts = await getCollection("posts");
 posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 <Layout>
-  <Header />
   <main>
     <h1>Blog</h1>
     <BlogCardGrid posts={posts} class="blog-grid" />

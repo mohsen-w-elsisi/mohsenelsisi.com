@@ -1,8 +1,8 @@
 // @ts-check
+import svelte from "@astrojs/svelte";
 import { defineConfig } from "astro/config";
 import remarkPreviewToFrontmatter from "remark-preview-to-frontmatter";
 
-import svelte from "@astrojs/svelte";
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,4 +16,14 @@ export default defineConfig({
   },
 
   integrations: [svelte()],
+
+  vite: {
+    resolve: {
+      alias: {
+        "@components": "/src/components",
+        "@layouts": "/src/layouts",
+        "@assets": "/src/assets",
+      },
+    },
+  }
 });

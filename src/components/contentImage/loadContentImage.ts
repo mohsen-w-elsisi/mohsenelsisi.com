@@ -1,5 +1,6 @@
 import type { ImageMetadata } from "astro";
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+
 import path from "path";
 
 const contentModules = import.meta.glob(

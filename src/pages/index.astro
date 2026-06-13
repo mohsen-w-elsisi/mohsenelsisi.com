@@ -1,12 +1,13 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import HeroSection from "../components/landing_page/HeroSection.astro";
-import ProjectsSection from "../components/landing_page/ProjectsSection.astro";
-import BlogSection from "../components/landing_page/BlogSection.astro";
-import ContactInfo from "../components/contacts/ContactInfo.astro";
+import ContactInfo from "@components/contacts/ContactInfo.astro";
+import BlogSection from "@components/landing_page/BlogSection.astro";
+import HeroSection from "@components/landing_page/HeroSection.astro";
+import ProjectsSection from "@components/landing_page/ProjectsSection.astro";
+
+import Layout from "@layouts/Layout.astro";
 ---
 
-<Layout>
+<Layout hideHeader>
   <HeroSection />
   <ProjectsSection />
   <BlogSection />

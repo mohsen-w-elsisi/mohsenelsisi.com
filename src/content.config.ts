@@ -1,9 +1,10 @@
-import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
+import { defineCollection } from "astro:content";
+
+import platformLoader from "./contentLoaders/platformLoader";
 import projectLoader from "./contentLoaders/projectContentLoader";
 import toolLoader from "./contentLoaders/toolLoader";
-import platformLoader from "./contentLoaders/platformLoader";
 
 const posts = defineCollection({
   loader: glob({

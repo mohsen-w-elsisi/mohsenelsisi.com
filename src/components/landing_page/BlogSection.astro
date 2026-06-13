@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
-import BlogCardGrid from "../BlogCardGrid.astro";
+
+import BlogCardGrid from "../blog/BlogCardGrid.astro";
 
 const posts = await getCollection("posts");
 posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());

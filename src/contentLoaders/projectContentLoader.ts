@@ -1,8 +1,9 @@
 import type { Loader } from "astro/loaders";
-import { readFile, readdir } from "fs/promises";
-import { parse as parseYaml } from "yaml";
-import { join } from "path";
+
 import { z } from "astro/zod";
+import { readFile, readdir } from "fs/promises";
+import { join } from "path";
+import { parse as parseYaml } from "yaml";
 
 export default function projectLoader(options: ProjectLoaderOptions): Loader {
   return {

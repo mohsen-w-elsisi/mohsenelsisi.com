@@ -1,7 +1,8 @@
+import type { Loader } from "astro/loaders";
+
 import { z } from "astro/zod";
 import { readFile } from "fs/promises";
 import path from "path";
-import type { Loader } from "astro/loaders";
 
 export default function toolLoader(options: ToolLoaderOptions): Loader {
   return {
