@@ -145,13 +145,14 @@
     &::-webkit-scrollbar {
       display: none;
     }
+
+    a {
+      color: var(--surface-color) ;
+      text-decoration: none;
+  
+      font-size: 1.2rem;
+      text-indent: calc(var(--heading-indentation) * 2rem);
+    }
   }
 
-  a {
-    color: white;
-    text-decoration: none;
-
-    font-size: 1.2rem;
-    text-indent: calc(var(--heading-indentation) * 2rem);
-  }
 </style>

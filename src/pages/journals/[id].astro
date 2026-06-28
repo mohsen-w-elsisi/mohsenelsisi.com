@@ -1,7 +1,9 @@
 ---
 import readableDate from "@components/readableDate";
 import ReadableTypography from "@components/ReadableTypography.astro";
+import TocButton from "@components/TocButton.svelte";
 import Layout from "@layouts/Layout.astro";
+import type { MarkdownHeading } from "astro";
 import { getCollection, type CollectionEntry, render } from "astro:content";
 
 export async function getStaticPaths() {
@@ -28,6 +30,12 @@ interface Props {
 
 const { metadata, entries } = Astro.props as Props;
 const { name, description } = metadata.data;
+
+const tocEntries: MarkdownHeading[] = entries.map((entry) => ({
+  depth: 2,
+  slug: entry.data.issue.toString(),
+  text: readableDate(entry.data.date),
+}));
 ---
 
 <Layout title={name}>
@@ -41,14 +49,14 @@ const { name, description } = metadata.data;
 
     <aside>
       <p><b>Dates</b></p>
-      {
-        entries.map((entry, i) => (
-          <a href={`#${entry.data.issue}`}>{readableDate(entry.data.date)}</a>
-        ))
-      }
+      {tocEntries.map(({ slug, text }, i) => <a href={`#${slug}`}>{text}</a>)}
     </aside>
 
     <hr />
+
+    <span class="toc-button-wrapper">
+      <TocButton headings={tocEntries} client:load />
+    </span>
 
     <main>
       <ReadableTypography>
@@ -58,7 +66,7 @@ const { name, description } = metadata.data;
             const { title, date, issue } = data;
             const { Content } = await render(entry);
             return (
-              <div class="journal-entry card" id={issue}>
+              <div class="journal-entry card" id={issue.toString()}>
                 <h2>{title}</h2>
                 <p class="date">{readableDate(date)}</p>
                 <Content />
@@ -100,20 +108,21 @@ const { name, description } = metadata.data;
     height: fit-content;
 
     a {
-        display: block;
-        
-        font-family: var(--font-sans);
-        text-decoration: none;
-        color: var(--dark-color);
-        padding: 0.5rem 0.5rem;
+      display: block;
 
-        border-radius: var(--rounded-corner-radius);
+      font-family: var(--font-sans);
+      text-decoration: none;
+      color: var(--dark-color);
+      padding: 0.5rem 0.5rem;
 
-        transition: background-color 100ms ease-in-out;        
+      border-radius: var(--rounded-corner-radius);
 
-        &:hover, &.current {
-          background-color: var(--surface-color);
-        }
+      transition: background-color 100ms ease-in-out;
+
+      &:hover,
+      &.current {
+        background-color: var(--surface-color);
+      }
     }
   }
 
@@ -137,5 +146,31 @@ const { name, description } = metadata.data;
     max-height: 400px;
     width: auto;
     border-radius: var(--rounded-corner-radius);
+  }
+
+  .toc-button-wrapper {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .layout {
+      padding: 1rem;
+
+      grid-template-areas:
+        "intro"
+        "entries";
+    }
+
+    aside {
+      display: none;
+    }
+
+    hr {
+      display: none;
+    }
+
+    .toc-button-wrapper {
+      display: contents;
+    }
   }
 </style>
