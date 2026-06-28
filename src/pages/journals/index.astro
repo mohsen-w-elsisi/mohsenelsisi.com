@@ -9,7 +9,7 @@ const journals = await getCollection("journalMetadata");
 
 <Layout title="Journals">
     <main>
-      <h1>Journals</h1>
+      <h1 transition:name="journal-heading">Journals</h1>
       <JournalCardGrid journals={journals} />
   </main>
 </Layout>

@@ -1,8 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
-
 import ContentImageWidget from "../contentImage/ContentImageWidget.astro";
-
 import ToolChip from "./ToolChip.astro";
 
 interface Props {
@@ -14,7 +12,9 @@ const { title, description, thumbnail, tools } = data;
 ---
 
 <a href=`/projects/${id}` class="card project-card">
-  <h3>{title}</h3>
+  <h3 transition:name={`project-title-${id}`}>
+    <span>{title}</span>
+  </h3>
 
   <ContentImageWidget
     transition:name=`project-thumbnail-${id}`
@@ -55,9 +55,9 @@ const { title, description, thumbnail, tools } = data;
   h3 {
     font: var(--card-title-font);
     text-align: center;
-    margin: 0;
 
     height: min-content;
+    width: 100%;
     margin: auto 0;
     -webktit-line-clamp: 2;
   }

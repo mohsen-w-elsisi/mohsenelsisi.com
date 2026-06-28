@@ -32,7 +32,9 @@ const ProjectDetails = (await render(project)).Content;
   <main>
     <h1>
       {Icon ? <Icon.svgComponent /> : ""}
-      {title}
+      <span transition:name={`project-title-${id}`}>
+        {title}
+      </span>
     </h1>
 
     <div class="links">

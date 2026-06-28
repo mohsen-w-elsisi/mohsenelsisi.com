@@ -15,7 +15,6 @@
 
 <div class={isOpen ? "isOpen" : ""}>
     <nav>
-        <a href="/">Home</a>
         <a href="/projects">Projects</a>
         <a href="/blog">Blog</a>
         <a href="/about">About</a>

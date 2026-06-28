@@ -10,7 +10,7 @@ posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 <Layout title="Blog">
   <main>
-    <h1>Blog</h1>
+    <h1 transition:name="blog-heading">Blog</h1>
     <BlogCardGrid posts={posts} class="blog-grid" />
   </main>
 </Layout>
