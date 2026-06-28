@@ -1,0 +1,9 @@
+- id: chess-bot
+  name: Building a Chess Bot
+  description: My journey building a chess bot in Rust
+  favourite: true
+
+- id: learning-os
+  name: Learning Operating System
+  description: My journey learning about operating systems following the book Operating Systems Three Easy Pieces
+  favourite: true

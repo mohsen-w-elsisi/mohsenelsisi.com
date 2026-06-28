@@ -1,0 +1,31 @@
+---
+import JournalCardGrid from "@components/journal/JournalCardGrid.astro";
+import { getCollection } from "astro:content";
+
+const journals = (await getCollection("journalMetadata"))
+  .toSorted((a, b) => {
+    const aFav = a.data.favourite ? 1 : 0;
+    const bFav = b.data.favourite ? 1 : 0;
+    return bFav - aFav;
+  });
+---
+
+<section>
+  <h1>Journals</h1>
+  <p>
+    Read My day-to-day experiences abd thoughts working on projects or learning
+    new things.
+  </p>
+  <JournalCardGrid journals={journals} />
+  <a href="/journals" class="see-more">see more</a>
+</section>
+
+<style>
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0 var(--landing-page-section-x-pad);
+    max-height: fit-content
+  }
+</style>

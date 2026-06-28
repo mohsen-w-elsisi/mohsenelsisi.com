@@ -14,6 +14,8 @@ const Element = Astro.props.element ?? "div";
 
 <style is:global>
   .readable-typography {
+    display: contents;
+
     font-family: var(--font-sans);
     font-size: 1.2rem;
 
@@ -22,7 +24,7 @@ const Element = Astro.props.element ?? "div";
       margin-bottom: 0.4rem;
     }
 
-    #byline {
+    #byline, .date {
       font-family: var(--font-serif);
       font-size: 1.5rem;
       margin-bottom: 2rem;

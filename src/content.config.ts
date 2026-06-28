@@ -1,6 +1,7 @@
-import { glob } from "astro/loaders";
+import { file, glob } from "astro/loaders";
 import { z } from "astro/zod";
 import { defineCollection } from "astro:content";
+import * as yaml from "yaml";
 
 import platformLoader from "./contentLoaders/platformLoader";
 import projectLoader from "./contentLoaders/projectContentLoader";
@@ -35,4 +36,37 @@ const platforms = defineCollection({
   }),
 });
 
-export const collections = { posts, projects, tools, platforms };
+const journalMetadata = defineCollection({
+  loader: file("content/journals/index.yaml", {
+    parser: yaml.parse,
+  }),
+  schema: z.object({
+    id: z.string(),
+    name: z.string(),
+    description: z.string(),
+    favourite: z.boolean().default(false),
+  }),
+});
+
+const journalEntries = defineCollection({
+  loader: glob({
+    pattern: "**/*.md",
+    base: "content/journals",
+    generateId: ({ data }) => `${data.parent}-${data.issue}`,
+  }),
+  schema: z.object({
+    parent: z.string(),
+    issue: z.number(),
+    title: z.string(),
+    date: z.date(),
+  }),
+});
+
+export const collections = {
+  posts,
+  projects,
+  tools,
+  platforms,
+  journalMetadata,
+  journalEntries,
+};

@@ -19,6 +19,7 @@
         <a href="/projects">Projects</a>
         <a href="/blog">Blog</a>
         <a href="/about">About</a>
+        <a href="/journals">Journals</a>
         <a href="/resume">Resume</a>
     </nav>
 </div>

@@ -18,12 +18,14 @@ const { title, date, headings } = Astro.props;
 
 <Layout title={title}>
   <TocButton headings={headings} client:load />
-  <ReadableTypography element="main">
-    <h1 transition:name={`blog-post-${title}`}>{title}</h1>
-    <span id="byline">
-      Written by Mohsen Elsisi, {readableDate(date)}
-    </span>
-    <slot />
+  <ReadableTypography>
+    <main>
+      <h1 transition:name={`blog-post-${title}`}>{title}</h1>
+      <span id="byline">
+        Written by Mohsen Elsisi, {readableDate(date)}
+      </span>
+      <slot />
+    </main>
   </ReadableTypography>
 </Layout>
 
