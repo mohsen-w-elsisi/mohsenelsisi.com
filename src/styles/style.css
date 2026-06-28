@@ -1,9 +1,11 @@
 :root {
   /* general variables */
-  
-  --primary-color: #5505c6;
-  --surface-color: #d6d9f8;
-  --dark-color: #000;
+
+  --surface-color: #F0EBFF;
+  --light-accent-color: #B499FF;
+  --primary-color: #3b00dbff;
+  --dark-accent-color: #26008fff;
+  --dark-color: #10003dff;
 
   --font-serif: "Bree Serif", serif;
   --font-sans: "Roboto", sans-serif;
@@ -14,11 +16,10 @@
 
   --shadow: 0px 10px 19px 21px rgba(0, 0, 0, 0.1);
 
-  
   /* specific component variables */
 
   --landing-page-section-x-pad: 3.5rem;
-  
+
   --card-grid-max-width: 1200px;
 
   --project-card-spacing: min(2vw, 2rem);
@@ -31,11 +32,10 @@
 @media (max-width: 768px) {
   :root {
     --landing-page-section-x-pad: 1rem;
-    
+
     --project-card-width: 80%;
   }
 }
-
 
 html,
 body {

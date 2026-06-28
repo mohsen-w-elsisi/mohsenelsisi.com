@@ -26,6 +26,8 @@ const journals = (await getCollection("journalMetadata"))
     flex-direction: column;
     gap: 1rem;
     padding: 0 var(--landing-page-section-x-pad);
-    max-height: fit-content
+    min-height: unset;
+
+    background-color: var(--light-accent-color);
   }
 </style>
