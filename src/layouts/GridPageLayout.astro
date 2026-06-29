@@ -1,0 +1,25 @@
+---
+import Layout from "./Layout.astro";
+
+interface Props {
+  title: string;
+}
+---
+
+<Layout>
+  <main>
+    <slot />
+  </main>
+</Layout>
+
+<style>
+  main {
+    padding: 0 2rem;
+  }
+
+  @media (max-width: 768px) {
+    main {
+      padding: 0 1rem;
+    }
+  }
+</style>

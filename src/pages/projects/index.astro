@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 
 import ProjectCard from "../../components/projects/ProjectCard.astro";
-import Layout from "../../layouts/Layout.astro";
+import GridPageLayout from "@layouts/GridPageLayout.astro";
 
 const projects = await getCollection("projects");
 projects.sort(
@@ -10,20 +10,14 @@ projects.sort(
 );
 ---
 
-<Layout title="Projects">
-  <main>
+<GridPageLayout title="Projects">
     <h1>projects</h1>
     <ol>
       {projects.map((project) => <ProjectCard project={project} />)}
     </ol>
-  </main>
-</Layout>
+</GridPageLayout>
 
-<style>
-  main {
-    padding: 0 2rem;
-  }
-  
+<style>  
   ol {    
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(var(--project-card-width), 1fr));

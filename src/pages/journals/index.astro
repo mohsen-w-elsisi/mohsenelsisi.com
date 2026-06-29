@@ -1,25 +1,12 @@
 ---
-import Layout from "@layouts/Layout.astro";
-import JournalCard from "@components/journal/JournalCard.astro";
 import { getCollection } from "astro:content";
 import JournalCardGrid from "@components/journal/JournalCardGrid.astro";
+import GridPageLayout from "@layouts/GridPageLayout.astro";
 
 const journals = await getCollection("journalMetadata");
 ---
 
-<Layout title="Journals">
-    <main>
-      <h1 transition:name="journal-heading">Journals</h1>
-      <JournalCardGrid journals={journals} />
-  </main>
-</Layout>
-
-<style>
-    main {
-        padding: 0 2rem;
-    }
-    
-    main :global(.card) {
-        /* padding: 2rem 0; */
-    }
-</style>
+<GridPageLayout title="Journals">
+  <h1 transition:name="journal-heading">Journals</h1>
+  <JournalCardGrid journals={journals} />
+</GridPageLayout>
