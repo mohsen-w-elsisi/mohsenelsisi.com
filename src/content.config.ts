@@ -3,9 +3,7 @@ import { z } from "astro/zod";
 import { defineCollection } from "astro:content";
 import * as yaml from "yaml";
 
-import platformLoader from "./contentLoaders/platformLoader";
-import projectLoader from "./contentLoaders/projectContentLoader";
-import toolLoader from "./contentLoaders/toolLoader";
+import { platformLoader, projectLoader, toolLoader } from "./customContentLoaders";
 
 const posts = defineCollection({
   loader: glob({
@@ -26,7 +24,7 @@ const projects = defineCollection({
 
 const tools = defineCollection({
   loader: toolLoader({
-    toolDir: "content/tools",
+    rootDir: "content/tools",
   }),
 });
 

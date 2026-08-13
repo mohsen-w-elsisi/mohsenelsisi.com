@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@astrojs/svelte": "^7.2.5",
+    "@mohsen-w-elsisi/content-parsers": "^1.1.1",
     "astro": "^5.16.11",
     "date-fns": "^4.1.0",
     "remark-preview-to-frontmatter": "file:../astro-preview",
