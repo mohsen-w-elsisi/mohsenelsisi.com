@@ -1,7 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 
-import ProjectCard from "../projects/ProjectCard.astro";
+import ProjectCard from "@components/content/projects/ProjectCard.astro";
+import LandingPageSecion from "@layouts/LandingPageSecion.astro";
 
 const projects = await getCollection("projects");
 projects.sort(
@@ -10,27 +11,24 @@ projects.sort(
 const previewProjects = projects.slice(0, 3);
 ---
 
-<section id="projects">
-  <h2>Projects</h2>
+<LandingPageSecion
+  id="projects"
+  title="Projects"
+  titleTransitionName="project-heading"
+  seeMoreHref="/projects"
+  backgroundColor="var(--surface-color)"
+  noDefaultPadding
+>
   <div id="projects-row">
     {previewProjects.map((project) => <ProjectCard project={project} />)}
   </div>
-  <a href="/projects" class="see-more">see more</a>
-</section>
+</LandingPageSecion>
 
 <style>
-  #projects {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    background-color: var(--surface-color);
+  :global(#projects h2) {
+    padding-inline: var(--horizontal-page-padding);
   }
-
-  h2 {
-    padding: 0 var(--landing-page-section-x-pad);
-  }
-
+  
   #projects-row {
     flex: 1;
     max-height: var(--project-row-height);
@@ -43,7 +41,7 @@ const previewProjects = projects.slice(0, 3);
     justify-content: center;
     overflow-x: scroll;
     gap: var(--project-card-spacing);
-    
+
     scroll-snap-type: x mandatory;
 
     overflow-y: visible;
@@ -70,11 +68,11 @@ const previewProjects = projects.slice(0, 3);
     }
 
     #projects-row > :global(:first-child) {
-      margin-left: var(--landing-page-section-x-pad);
+      margin-left: var(--horizontal-page-padding);
     }
 
     #projects-row > :global(:last-child) {
-      margin-right: var(--landing-page-section-x-pad);
+      margin-right: var(--horizontal-page-padding);
     }
   }
 </style>

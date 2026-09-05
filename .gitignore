@@ -27,6 +27,7 @@ pnpm-debug.log*
 .idea/
 .vscode/
 **/.obsidian/
+.trash/
 
 # other
 .gemini

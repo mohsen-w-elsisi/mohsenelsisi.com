@@ -1,10 +1,11 @@
 ---
+import Layout from "@layouts/Layout.astro";
 import ContactInfo from "@components/contacts/ContactInfo.astro";
 import BlogSection from "@components/landing_page/BlogSection.astro";
 import HeroSection from "@components/landing_page/HeroSection.astro";
 import ProjectsSection from "@components/landing_page/ProjectsSection.astro";
 import JournalSection from "@components/landing_page/JournalSection.astro";
-import Layout from "@layouts/Layout.astro";
+import CertificatesSection from "@components/landing_page/CertificatesSection.astro";
 ---
 
 <Layout hideHeader>
@@ -12,5 +13,6 @@ import Layout from "@layouts/Layout.astro";
   <ProjectsSection />
   <JournalSection />
   <BlogSection />
+  <CertificatesSection />
   <ContactInfo />
 </Layout>

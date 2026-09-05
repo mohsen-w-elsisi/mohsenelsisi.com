@@ -1,32 +1,23 @@
 ---
 import { getCollection } from "astro:content";
 
-import BlogCardGrid from "../blog/BlogCardGrid.astro";
+import LandingPageSection from "@layouts/LandingPageSecion.astro";
+import BlogCardGrid from "../content/blog/BlogCardGrid.astro";
 
 const posts = await getCollection("posts");
 posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 const recentPosts = posts.slice(0, 4);
 ---
 
-<section id="blog">
-  <h2 transition:name="blog-heading">Blog</h2>
+<LandingPageSection
+  id="blog"
+  title="Blog"
+  titleTransitionName="blog-heading"
+  backgroundColor="var(--dark-color)"
+  textColor="var(--surface-color)"
+  cardBackgroundColor="var(--dark-accent-color)"
+  cardTextColor="var(--surface-color)"
+  seeMoreHref="/blog"
+>
   <BlogCardGrid posts={recentPosts} />
-  <a href="/blog" class="see-more">see more</a>
-</section>
-
-<style>
-  section {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 0 var(--landing-page-section-x-pad);
-
-    background-color: var(--dark-color);
-    color: var(--surface-color);
-  }
-
-  section :global(.card) {
-    background-color: var(--dark-accent-color);
-    color: var(--surface-color);
-  }
-</style>
+</LandingPageSection>

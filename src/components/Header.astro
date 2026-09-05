@@ -9,11 +9,11 @@ import Menu from "./Menu.svelte";
     <Image src={myAvatar} alt="Mohsen's Avatar" />
   </a>
   <nav class="large-menu">
-    <a href="/projects">Projects</a>
-    <a href="/journals">Journals</a>
-    <a href="/blog">Blog</a>
-    <a href="/about">About</a>
-    <a href="/resume">Resume</a>
+    <a href="/projects" class="display-anchor">Projects</a>
+    <a href="/journals" class="display-anchor">Journals</a>
+    <a href="/blog" class="display-anchor">Blog</a>
+    <a href="/about" class="display-anchor">About</a>
+    <a href="/resume" class="display-anchor">Resume</a>
   </nav>
   <br class="large-menu" />
   <span class="mobile-menu"><Menu client:only /></span>

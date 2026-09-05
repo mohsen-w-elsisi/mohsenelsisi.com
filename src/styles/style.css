@@ -19,6 +19,7 @@
   /* specific component variables */
 
   --landing-page-section-x-pad: 3.5rem;
+  --horizontal-page-padding: 3.5rem;
 
   --card-grid-max-width: 1200px;
 
@@ -32,6 +33,7 @@
 @media (max-width: 768px) {
   :root {
     --landing-page-section-x-pad: 1rem;
+    --horizontal-page-padding: 1rem;
 
     --project-card-width: 80%;
   }
@@ -40,10 +42,6 @@
 html,
 body {
   margin: 0;
-  min-height: 100vh;
-}
-
-section {
   min-height: 100vh;
 }
 
@@ -75,12 +73,12 @@ h6 {
 }
 
 a {
-  &.card {
+  &.card, &.display-anchor {
     text-decoration: none;
     color: inherit;
   }
 
-  &:not(.card) {
+  &:not(.card):not(.display-anchor) {
     font-family: var(--font-serif);
     font-style: normal;
     font-weight: 400;
@@ -98,12 +96,4 @@ p {
 
 svg {
   stroke: var(--dark-color);
-}
-
-.see-more {
-  margin-bottom: 2rem;
-  margin-right: auto;
-  margin-left: auto;
-
-  font-size: var(--display-body-font-size);
 }

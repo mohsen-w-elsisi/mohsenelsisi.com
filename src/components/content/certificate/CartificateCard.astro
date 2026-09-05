@@ -1,0 +1,107 @@
+---
+import type { Certificate } from "@mohsen-w-elsisi/content-parsers";
+import { render, type CollectionEntry } from "astro:content";
+import ContentImageWidget from "@components/contentImage/ContentImageWidget.astro";
+
+interface Props {
+  certificate: CollectionEntry<"certificates">;
+}
+
+const { certificate } = Astro.props as Props;
+const { id, data } = certificate;
+const { name, color, institution, grade, date } = data as Certificate;
+const Description = (await render(certificate)).Content;
+---
+
+<article class="certificate-border">
+  <span class="certificate-content">
+    <a href={institution.url} class="institution-name display-anchor">
+      {institution.name}
+    </a>
+    <span class="logo">
+      <ContentImageWidget
+        src={institution.logo}
+        alt={`${institution.name} logo`}
+      />
+    </span>
+    <h3>{name}</h3>
+    <p class="grade">{grade}</p>
+    <p class="date">{date.end.display}</p>
+    <span class="description">
+      <Description />
+    </span>
+  </span>
+</article>
+
+<style define:vars={{ certificateColor: color }}>
+  .certificate-border {    
+    background-color: var(--certificateColor);
+    padding: 20px;
+    border-radius: var(--rounded-corner-radius);
+
+    max-width: 60ch;
+
+    display: grid;
+
+    .certificate-content {
+      --logo-size: 2rem;
+
+      background-color: white;
+      padding: 1rem;
+      border-radius: calc(var(--rounded-corner-radius) - 10px);
+
+      display: grid;
+      grid-template-areas:
+        "institution-logo institution-name"
+        "name             name            "
+        "grade            grade           "
+        "date             date            "
+        "description      description     ";
+      grid-template-columns: var(--logo-size) 1fr;
+      grid-template-rows: auto auto auto auto 1fr;
+      column-gap: 0.5rem;
+
+      & > * {
+        height: fit-content;
+      }
+
+      .institution-name {
+        grid-area: institution-name;
+        font-weight: bold;
+        height: min-content;
+        align-self: center;
+      }
+      .logo {
+        grid-area: institution-logo;
+        width: var(--logo-size);
+        aspect-ratio: 1/1;
+        * {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      h3 {
+        font-size: 2rem;
+        grid-area: name;
+        margin: 0;
+        margin-top: 0.3rem;
+      }
+      .grade {
+        grid-area: grade;
+        font-size: 1.3rem;
+        font-family: var(--font-serif);
+        color: #0009;
+      }
+      .date {
+        grid-area: date;
+        font-size: 1.3rem;
+        font-family: var(--font-serif);
+        color: #0009;
+      }
+      .description {
+        grid-area: description;
+        margin-top: 1rem;
+      }
+    }
+  }
+</style>

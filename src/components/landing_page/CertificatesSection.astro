@@ -1,0 +1,27 @@
+---
+import { getCollection } from "astro:content";
+import LandingPageSecion from "@layouts/LandingPageSecion.astro";
+import CertificateCard from "@components/content/certificate/CartificateCard.astro";
+
+const certificates = await getCollection("certificates");
+---
+
+<LandingPageSecion id="certificates" title="Certificates">
+  <!-- <p>blah blah</p> -->
+  <div>
+    {
+      certificates.map((certificate) => (
+        <CertificateCard certificate={certificate} />
+      ))
+    }
+  </div>
+</LandingPageSecion>
+
+<style>
+  div {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(45ch, 1fr));
+    place-items: stretch center;
+  }
+</style>

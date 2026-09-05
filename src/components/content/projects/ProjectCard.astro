@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import ContentImageWidget from "../contentImage/ContentImageWidget.astro";
+import ContentImageWidget from "../../contentImage/ContentImageWidget.astro";
 import ToolChip from "./ToolChip.astro";
 
 interface Props {
@@ -9,6 +9,7 @@ interface Props {
 
 const { id, data } = Astro.props.project;
 const { title, description, thumbnail, tools } = data;
+const projectTools = tools as string[]; // for typing
 ---
 
 <a href=`/projects/${id}` class="card project-card">
@@ -27,7 +28,7 @@ const { title, description, thumbnail, tools } = data;
   <p>{description}</p>
 
   <div class="project-tool-icons">
-    {tools.map((toolName) => <ToolChip toolName={toolName} style="icon" />)}
+    {projectTools.map((toolName) => <ToolChip toolName={toolName} style="icon" />)}
   </div>
 </a>
 
