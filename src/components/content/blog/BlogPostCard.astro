@@ -12,7 +12,7 @@ const { remarkPluginFrontmatter } = await render(post);
 const preview = remarkPluginFrontmatter.preview as string;
 ---
 
-<a href={`/blog/${post.id}`} class="card">
+<a href={`/blog/${post.id}`} class="card" data-fade>
   <h3 transition:name={`blog-post-${post.data.title}`}>{post.data.title}</h3>
   <p class="date">{readableDate(post.data.date)}</p>
   <p>{preview}</p>

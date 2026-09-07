@@ -10,12 +10,16 @@ import heroMe from "../../assets/hero-me.webp";
 <section id="hero">
   <Header />
   <div id="hero-content">
-    <div id="hero-photo">
+    <div id="hero-photo" data-fade="0">
       <Image src={heroMe} alt="Mohsen Elsisi" />
       <span class="hero-gradiant"></span>
     </div>
-    <h1>Hello World! <br /> I'm Mohsen.</h1>
-    <div id="hero-details">
+
+    <h1 data-fade="1">
+      Hello World! <br /> I'm Mohsen.
+    </h1>
+
+    <div id="hero-details" data-fade="2">
       <p>
         Hi, I’m Mohsen Elsisi. I’m a self-taught web and flutter developer
         turned data science and AI college student at Zewail city.

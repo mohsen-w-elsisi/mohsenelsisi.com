@@ -1,0 +1,48 @@
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
+      }
+    });
+  });
+
+  const registerElements = () => {
+    const animatableElements = document.querySelectorAll("[data-fade]");
+
+    for (const element of animatableElements) {
+      observer.observe(element);
+    }
+  };
+
+  document.addEventListener("astro:page-load", registerElements);
+
+  registerElements();
+</script>
+
+<style is:global>
+  [data-fade] {
+    transition: all 0.5s ease-in-out;
+    transition-delay: calc(var(--stagger) + 0.1s);
+
+    opacity: 0;
+    transform: translateY(1rem);
+
+    &.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    &[data-fade="1"] {
+      --stagger: 0.1s;
+    }
+
+    &[data-fade="2"] {
+      --stagger: 0.2s;
+    }
+
+    &[data-fade="3"] {
+      --stagger: 0.3s;
+    }
+  }
+</style>

@@ -13,7 +13,7 @@ const { name, color, institution, grade, date } = data as Certificate;
 const Description = (await render(certificate)).Content;
 ---
 
-<article class="certificate-border">
+<article class="certificate-border" data-fade>
   <span class="certificate-content">
     <a href={institution.url} class="institution-name display-anchor">
       {institution.name}

@@ -34,14 +34,14 @@ const {
   id={id}
   class:list={{ fullHeight, defaultLayout, noDefaultLayout, noDefaultPadding }}
 >
-  <h2 transition:name={titleTransitionName}>
+  <h2 data-fade transition:name={titleTransitionName}>
     {title}
   </h2>
   <slot />
 
   {
     seeMoreHref && (
-      <a class="see-more" href={seeMoreHref}>
+      <a class="see-more" data-fade href={seeMoreHref}>
         See More
       </a>
     )

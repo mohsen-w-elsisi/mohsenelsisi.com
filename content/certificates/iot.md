@@ -17,7 +17,7 @@ date:
         date: 2026-01-31
     
 resume: A certificate awarded for participation in the intense Sector B5 IoT workshop. View certificate on Linkedin. The workshop covered IoT architecture, layers, and the MQTT protocol.
----k
+---
 
 A certificate awarded for participation in the intense Sector B5 IoT workshop. The workshop covered IoT architecture, layers, and the MQTT protocol.
 
