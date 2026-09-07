@@ -7,10 +7,24 @@ import SignitureSVG from "@assets/signature.svg";
 </span>
 
 <script>
-  function setupSignatureAnimation() {
-    const signature = document.querySelector("#signature svg");
-    if (!signature) throw new Error("Signature SVG not found");
-    const signaturePaths = signature.querySelectorAll("path");
+  let signature: SVGElement;
+  let signaturePaths: NodeListOf<SVGPathElement>;
+
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) animateSignature();
+  });
+
+  const animateSignature = () => {
+    signaturePaths.forEach((path) => {
+      path.classList.add("draw");
+    });
+  };
+
+  const setupSignatureAnimation = () => {
+    if (signature) observer.unobserve(signature); // clean up
+    
+    signature = document.querySelector("#signature svg")!;
+    signaturePaths = signature.querySelectorAll("path");
 
     let pathIndex = 0;
     let accumulatedLength = 0;
@@ -23,17 +37,8 @@ import SignitureSVG from "@assets/signature.svg";
       accumulatedLength += pathLength;
     }
 
-    new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          signaturePaths.forEach((path) => {
-            path.classList.add("draw");
-          });
-          console.log("drawing signature");
-        }
-      });
-    }).observe(signature);
-  }
+    observer.observe(signature);
+  };
 
   document.addEventListener("astro:page-load", setupSignatureAnimation);
 </script>
