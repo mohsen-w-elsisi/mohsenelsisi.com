@@ -7,31 +7,35 @@ import SignitureSVG from "@assets/signature.svg";
 </span>
 
 <script>
-  const signature = document.querySelector("#signature svg");
-  if (!signature) throw new Error("Signature SVG not found");
-  const signaturePaths = signature.querySelectorAll("path");
+  function setupSignatureAnimation() {
+    const signature = document.querySelector("#signature svg");
+    if (!signature) throw new Error("Signature SVG not found");
+    const signaturePaths = signature.querySelectorAll("path");
 
-  let pathIndex = 0;
-  let accumulatedLength = 0;
-  for (const path of signaturePaths) {
-    const pathLength = path.getTotalLength();
-    path.style.setProperty("--path-length", pathLength.toString());
-    path.style.setProperty("--path-index", pathIndex.toString());
-    path.style.setProperty("--accum-length", accumulatedLength.toString());
-    pathIndex++;
-    accumulatedLength += pathLength;
+    let pathIndex = 0;
+    let accumulatedLength = 0;
+    for (const path of signaturePaths) {
+      const pathLength = path.getTotalLength();
+      path.style.setProperty("--path-length", pathLength.toString());
+      path.style.setProperty("--path-index", pathIndex.toString());
+      path.style.setProperty("--accum-length", accumulatedLength.toString());
+      pathIndex++;
+      accumulatedLength += pathLength;
+    }
+
+    new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          signaturePaths.forEach((path) => {
+            path.classList.add("draw");
+          });
+          console.log("drawing signature");
+        }
+      });
+    }).observe(signature);
   }
 
-  new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        signaturePaths.forEach((path) => {
-          path.classList.add("draw");
-        });
-        console.log("drawing signature");
-      }
-    });
-  }).observe(signature);
+  document.addEventListener("astro:page-load", setupSignatureAnimation);
 </script>
 
 <style>
@@ -47,9 +51,9 @@ import SignitureSVG from "@assets/signature.svg";
       --draw-rate: 0.005s; /* per pixel */
 
       transition-property: stroke-dashoffset;
-      transition-duration: calc(var(--draw-rate) * var(--path-length));
-      transition-delay: calc(var(--accum-length) * var(--draw-rate));
-      
+      transition-duration: calc(var(--path-length, 0) * var(--draw-rate));
+      transition-delay: calc(var(--accum-length, 0) * var(--draw-rate));
+
       &.draw {
         stroke-dashoffset: 0;
       }
