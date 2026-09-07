@@ -1,0 +1,58 @@
+---
+import SignitureSVG from "@assets/signature.svg";
+---
+
+<span id="signature">
+  <SignitureSVG />
+</span>
+
+<script>
+  const signature = document.querySelector("#signature svg");
+  if (!signature) throw new Error("Signature SVG not found");
+  const signaturePaths = signature.querySelectorAll("path");
+
+  let pathIndex = 0;
+  let accumulatedLength = 0;
+  for (const path of signaturePaths) {
+    const pathLength = path.getTotalLength();
+    path.style.setProperty("--path-length", pathLength.toString());
+    path.style.setProperty("--path-index", pathIndex.toString());
+    path.style.setProperty("--accum-length", accumulatedLength.toString());
+    pathIndex++;
+    accumulatedLength += pathLength;
+  }
+
+  new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        signaturePaths.forEach((path) => {
+          path.classList.add("draw");
+        });
+        console.log("drawing signature");
+      }
+    });
+  }).observe(signature);
+</script>
+
+<style>
+  span :global(svg) {
+    stroke: var(--surface-color);
+    height: 4rem;
+    width: auto;
+
+    path {
+      stroke-dasharray: var(--path-length);
+      stroke-dashoffset: var(--path-length);
+
+      --draw-rate: 0.005s; /* per pixel */
+
+      transition-property: stroke-dashoffset;
+      transition-duration: calc(var(--draw-rate) * var(--path-length));
+      transition-delay: calc(var(--accum-length) * var(--draw-rate));
+      
+      &.draw {
+        stroke-dashoffset: 0;
+      }
+    }
+  }
+</style>

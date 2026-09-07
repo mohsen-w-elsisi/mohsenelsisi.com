@@ -1,9 +1,11 @@
 ---
+import Signiture from "./Signiture.astro";
 import SocialIcons from "./SocialIcons.astro";
 ---
 
 <footer>
   <SocialIcons />
+  <Signiture />
 </footer>
 
 <style>
@@ -11,6 +13,16 @@ import SocialIcons from "./SocialIcons.astro";
     background-color: black;
     color: var(--surface-color);
     padding: 1rem;
+    padding-bottom: 0;
+
+    /* display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    place-items: center; */
+
+    display: flex;
+    justify-content: space-between;
+
     & :global(*) {
       stroke: var(--surface-color);
     }
